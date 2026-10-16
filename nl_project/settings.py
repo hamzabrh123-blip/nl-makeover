@@ -5,10 +5,16 @@ Django settings for nl_project project.
 from pathlib import Path
 import os
 import dj_database_url
-from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Safely load .env if python-dotenv is installed (mostly for local development)
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(BASE_DIR, '.env'))
+except ImportError:
+    pass
 
 # .env file load karo
 load_dotenv(os.path.join(BASE_DIR, '.env'))
