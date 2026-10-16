@@ -83,6 +83,12 @@ class VideoEmbed(models.Model):
 class SocialAndAppSettings(models.Model):
     site_name = models.CharField(max_length=100, default="NL Makeover", verbose_name="Salon Name", blank=True, null=True)
     logo = models.ImageField(upload_to='logo/', blank=True, null=True, verbose_name="Salon Logo") # Cloudinary par save hoga
+
+# Naye dynamic fields hero section ke liye:
+    hero_tagline = models.CharField(max_length=200, default="Luxury Bridal Studio & Beauty Parlour", blank=True, null=True)
+    hero_title = models.CharField(max_length=200, default="Redefining Your Elegance", blank=True, null=True)
+    hero_description = models.TextField(default="Step into a world of glamour. Experience professional bridal makeup, high-end hair styling, and premium skin treatments tailored just for you.", blank=True, null=True)
+
     phone_number = models.CharField(max_length=20, verbose_name="WhatsApp / Contact Number", blank=True, null=True)
     whatsapp_channel_url = models.URLField(verbose_name="WhatsApp Channel Link", blank=True, null=True)
     instagram_url = models.URLField(verbose_name="Instagram Profile Link", blank=True, null=True)
