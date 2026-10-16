@@ -1,3 +1,4 @@
+import re
 from django.db import models
 
 
@@ -20,8 +21,7 @@ class Service(models.Model):
 
     def __str__(self):
         return self.title
-
-
+    
 class VideoEmbed(models.Model):
     PLATFORM_CHOICES = (
         ('youtube', 'YouTube Video / Short'),
@@ -67,18 +67,17 @@ class VideoEmbed(models.Model):
                     video_id = url.split('/')[-1].split('?')[0]
                 
                 if video_id:
-                    return f"https://www.youtube.com/embed/{video_id}"
+                    # Error 153 se bachne ke liye youtube-nocookie use kiya hai
+                    return f"https://www.youtube-nocookie.com/embed/{video_id}?rel=0&modestbranding=1"
             except Exception:
                 pass
             
-            # Fallback agar parsing mein kuch issue ho
             return url
 
         return url
 
     def __str__(self):
         return f"{self.get_platform_display()} - {self.title}"
-
 
 class SocialAndAppSettings(models.Model):
     site_name = models.CharField(max_length=100, default="NL Makeover", verbose_name="Salon Name", blank=True, null=True)
