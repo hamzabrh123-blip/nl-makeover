@@ -1,7 +1,3 @@
-"""
-Django settings for nl_project project.
-"""
-
 from pathlib import Path
 import os
 import dj_database_url
@@ -9,15 +5,12 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Safely load .env if python-dotenv is installed (mostly for local development)
+# Safely load .env file
 try:
     from dotenv import load_dotenv
     load_dotenv(os.path.join(BASE_DIR, '.env'))
 except ImportError:
     pass
-
-# .env file load karo
-load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-e3b9$!k9&lim#g$-6p8@r19_rsh5-)!p$+_nvlzy(p-g%&h76&')
 
