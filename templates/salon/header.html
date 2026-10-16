@@ -1,0 +1,27 @@
+<!-- Top Navigation / Header -->
+<header class="sticky top-0 z-50 bg-stone-950/80 backdrop-blur-md border-b border-stone-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-3">
+            {% if settings.logo %}
+                <img src="{{ settings.logo.url }}" alt="NL Makeover Logo" class="h-16 w-16 sm:h-20 sm:w-20 rounded-xl object-contain border border-amber-500/50 shadow-lg bg-black p-1">
+            {% endif %}
+            <span class="text-xl sm:text-2xl font-serif tracking-wider font-bold bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-600 bg-clip-text text-transparent">
+                {{ settings.site_name|default:"NL Makeover" }}
+            </span>
+        </a>
+        <!-- Nav links -->
+        <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide text-stone-300">
+            <a href="#banners" class="hover:text-amber-400 transition">Highlights</a>
+            <a href="#services" class="hover:text-amber-400 transition">Services</a>
+            <a href="#gallery" class="hover:text-amber-400 transition">Reels & Gallery</a>
+            <a href="#contact" class="hover:text-amber-400 transition">Contact & Location</a>
+        </nav>
+        <div>
+            {% if settings.apk_file %}
+            <a href="{{ settings.apk_file.url }}" class="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-stone-950 font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-full shadow-lg transition">
+                <i class="fa-solid fa-download"></i> Download App
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</header>

@@ -1,0 +1,36 @@
+<!-- Hero Section (Dynamic from Admin) -->
+<section class="relative py-16 lg:py-24 overflow-hidden border-b border-stone-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        
+        {% if settings.hero_tagline %}
+        <span class="text-amber-400 uppercase tracking-widest text-xs font-semibold mb-4 inline-block bg-amber-950/40 border border-amber-900/50 px-4 py-1.5 rounded-full">
+            {{ settings.hero_tagline }}
+        </span>
+        {% endif %}
+
+        {% if settings.hero_title %}
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold tracking-tight mb-6 text-stone-100">
+            {{ settings.hero_title }}
+        </h1>
+        {% endif %}
+
+        {% if settings.hero_description %}
+        <p class="max-w-2xl mx-auto text-stone-400 text-base sm:text-lg mb-8">
+            {{ settings.hero_description }}
+        </p>
+        {% endif %}
+
+        <div class="flex flex-wrap justify-center gap-4">
+            {% if settings.phone_number %}
+            <a href="https://wa.me/91{{ settings.phone_number }}?text=Hi,%20I%20want%20to%20book%20an%20appointment%20at%20NL%20Makeover." target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-8 py-3.5 rounded-full shadow-lg flex items-center gap-3 transition">
+                <i class="fa-brands fa-whatsapp text-xl"></i> Book via WhatsApp
+            </a>
+            {% endif %}
+            {% if settings.instagram_url %}
+            <a href="{{ settings.instagram_url }}" target="_blank" class="bg-stone-800 hover:bg-stone-700 border border-stone-700 text-stone-200 font-medium px-8 py-3.5 rounded-full shadow-lg flex items-center gap-3 transition">
+                <i class="fa-brands fa-instagram text-xl text-amber-400"></i> Follow Instagram
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>

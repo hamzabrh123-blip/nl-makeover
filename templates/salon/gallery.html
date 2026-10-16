@@ -1,0 +1,21 @@
+<!-- Instagram & YouTube Reels Section -->
+<section id="gallery" class="py-20 bg-stone-900/20 border-t border-b border-stone-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-600 bg-clip-text text-transparent">Reels & Transformations</h2>
+            <p class="text-stone-400 mt-2">Watch our latest work straight from Instagram & YouTube</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for video in videos %}
+            <div class="bg-stone-900/50 border border-stone-800 rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+                <div class="relative w-full aspect-[9/16] bg-stone-950 rounded-xl overflow-hidden border border-stone-800">
+                    <iframe src="{{ video.get_embed_url }}" class="w-full h-full border-0" scrolling="no" allowtransparency="true" allowfullscreen></iframe>
+                </div>
+                <p class="mt-4 text-sm text-stone-300 font-medium text-center">{{ video.title }}</p>
+            </div>
+            {% empty %}
+            <p class="col-span-3 text-center text-stone-500 py-12">No videos added yet. Add Instagram/YouTube links in the Admin panel.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>

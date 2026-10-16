@@ -1,0 +1,31 @@
+<!-- Dynamic Image Banner Slider Section -->
+<section id="banners" class="py-6 bg-stone-950 border-b border-stone-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div id="default-carousel" class="relative w-full overflow-hidden rounded-2xl border border-amber-500/30 shadow-2xl" data-carousel="slide">
+            <!-- Carousel Wrapper -->
+            <div class="relative h-56 sm:h-80 md:h-96 lg:h-[450px] overflow-hidden rounded-2xl">
+                {% for banner in banners %}
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="{{ banner.image.url }}" class="absolute block w-full h-full object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" alt="{{ banner.title|default:'NL Makeover Banner' }}">
+                    {% if banner.title %}
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent p-6 text-center sm:text-left">
+                        <h3 class="text-xl sm:text-3xl font-serif font-bold text-amber-300">{{ banner.title }}</h3>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <!-- Slider Controls -->
+            <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-stone-950/60 border border-stone-700 text-stone-200 group-hover:bg-amber-500 group-hover:text-stone-950 transition">
+                    <i class="fa-solid fa-chevron-left text-sm"></i>
+                </span>
+            </button>
+            <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-stone-950/60 border border-stone-700 text-stone-200 group-hover:bg-amber-500 group-hover:text-stone-950 transition">
+                    <i class="fa-solid fa-chevron-right text-sm"></i>
+                </span>
+            </button>
+        </div>
+    </div>
+</section>

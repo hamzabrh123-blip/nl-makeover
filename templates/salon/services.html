@@ -1,0 +1,31 @@
+<!-- Services Section -->
+<section id="services" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-serif font-bold bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-600 bg-clip-text text-transparent">Our Signature Services</h2>
+        <p class="text-stone-400 mt-2">Explore our professional beauty and bridal packages</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for service in services %}
+        <div class="bg-stone-900/40 border border-stone-800/80 rounded-2xl p-6 shadow-xl hover:border-amber-500/50 transition duration-300 flex flex-col justify-between">
+            <div>
+                {% if service.image %}
+                <div class="mb-5 overflow-hidden rounded-xl aspect-[16/10] bg-stone-950">
+                    <img src="{{ service.image.url }}" alt="{{ service.title }}" class="w-full h-full object-cover">
+                </div>
+                {% endif %}
+                <span class="text-xs uppercase tracking-wider text-amber-400 font-semibold bg-amber-950/30 px-3 py-1 rounded-md border border-amber-900/30">{{ service.category }}</span>
+                <h3 class="text-xl font-serif font-semibold mt-3 text-stone-100">{{ service.title }}</h3>
+                <p class="text-stone-400 text-sm mt-2 line-clamp-3">{{ service.description }}</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-stone-800 flex items-center justify-between">
+                <span class="text-amber-400 font-bold text-lg">₹ {{ service.price }}</span>
+                {% if settings.phone_number %}
+                <a href="https://wa.me/91{{ settings.phone_number }}?text=Hi,%20I%20am%20interested%20in%20{{ service.title }}" target="_blank" class="text-xs font-semibold bg-stone-800 hover:bg-amber-600 text-stone-200 hover:text-stone-950 px-4 py-2 rounded-lg transition">Enquire Now</a>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <p class="col-span-3 text-center text-stone-500 py-12">No services added yet. Please add services from the Django Admin panel.</p>
+        {% endfor %}
+    </div>
+</section>
