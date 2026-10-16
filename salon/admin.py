@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Service, VideoEmbed, SocialAndAppSettings
+from .models import Service, VideoEmbed, SocialAndAppSettings, SliderBanner
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
@@ -8,6 +8,11 @@ class ServiceAdmin(admin.ModelAdmin):
 @admin.register(VideoEmbed)
 class VideoEmbedAdmin(admin.ModelAdmin):
     list_display = ('title', 'platform', 'is_active')
+
+@admin.register(SliderBanner)
+class SliderBannerAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active')
+    list_editable = ('is_active',)
 
 @admin.register(SocialAndAppSettings)
 class SettingsAdmin(admin.ModelAdmin):
