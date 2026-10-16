@@ -32,9 +32,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+    'cloudinary_storage',
     'salon.apps.SalonConfig',
 ]
 
@@ -64,6 +64,12 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+# Static files Finders (Zaroori hai taaki admin ki CSS collect ho sake)
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
 WSGI_APPLICATION = 'nl_project.wsgi.application'
