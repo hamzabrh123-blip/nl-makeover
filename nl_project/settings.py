@@ -25,10 +25,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',          # <-- Cloudinary storage app
+    'cloudinary_storage',
     'django.contrib.staticfiles',
-    'cloudinary',                  # <-- Cloudinary app
-    'salon',                       # <-- Apna salon app yahan added hai!
+    'cloudinary',
+    'salon',
 ]
 
 MIDDLEWARE = [
