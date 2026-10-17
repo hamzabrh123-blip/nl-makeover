@@ -10,6 +10,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Flowbite Carousel CSS/JS for Smooth Slider -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+
+    <!-- Google Structured Data (JSON-LD Schema) for NL Makeover -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BeautySalon",
+      "name": "NL Makeover",
+      "image": "{{ request.scheme }}://{{ request.get_host }}/static/images/logo.png",
+      "@id": "{{ request.scheme }}://{{ request.get_host }}/#salon",
+      "url": "{{ request.scheme }}://{{ request.get_host }}/",
+      "telephone": "+91-9876543210",
+      "priceRange": "₹₹",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Main Road",
+        "addressLocality": "Bahraich",
+        "addressRegion": "UP",
+        "postalCode": "271801",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 27.575,
+        "longitude": 81.595
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "09:00",
+        "closes": "20:00"
+      },
+      "sameAs": [
+        "https://www.instagram.com/",
+        "https://www.facebook.com/"
+      ]
+    }
+    </script>
 </head>
 <body class="bg-stone-950 text-stone-100 font-sans selection:bg-amber-500 selection:text-stone-950">
 

@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <!-- Home Page -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+    
+    <!-- Home Page with Embedded Videos Schema -->
     <url>
         <loc>{{ request.scheme }}://{{ request.get_host }}/</loc>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
+        
+        {% for video in videos %}
+        <video:video>
+            <!-- Default Thumbnail / Image URL -->
+            <video:thumbnail_loc>{{ request.scheme }}://{{ request.get_host }}/static/images/logo.png</video:thumbnail_loc>
+            <!-- Video Title -->
+            <video:title>{{ video.title|default:"NL Makeover Beauty & Hair Transformation" }}</video:title>
+            <!-- Video Description -->
+            <video:description>Watch trending hair makeover, bridal makeup, and beauty transformation reels by NL Makeover.</video:description>
+            <!-- Embed / Player Link -->
+            <video:player_loc>{{ video.video_url }}</video:player_loc>
+        </video:video>
+        {% endfor %}
     </url>
     
-    <!-- Dynamic Service Pages (Agar aapke paas service detail page hai) -->
+    <!-- Dynamic Service Pages -->
     {% for service in services %}
     <url>
         <loc>{{ request.scheme }}://{{ request.get_host }}/service/{{ service.id }}/</loc>
@@ -15,4 +30,5 @@
         <priority>0.8</priority>
     </url>
     {% endfor %}
+
 </urlset>
