@@ -22,6 +22,7 @@ class Service(models.Model):
     def __str__(self):
         return self.title
     
+
 class VideoEmbed(models.Model):
     PLATFORM_CHOICES = (
         ('youtube', 'YouTube Video / Short'),
@@ -45,7 +46,6 @@ class VideoEmbed(models.Model):
 
         # --- INSTAGRAM HANDLING ---
         if 'instagram.com' in url:
-            # Clean up query params (jaise ?igsh=...)
             clean_url = url.split('?')[0]
             if not clean_url.endswith('/'):
                 clean_url += '/'
@@ -67,7 +67,6 @@ class VideoEmbed(models.Model):
                     video_id = url.split('/')[-1].split('?')[0]
                 
                 if video_id:
-                    # Error 153 se bachne ke liye youtube-nocookie use kiya hai
                     return f"https://www.youtube-nocookie.com/embed/{video_id}?rel=0&modestbranding=1"
             except Exception:
                 pass
@@ -79,11 +78,12 @@ class VideoEmbed(models.Model):
     def __str__(self):
         return f"{self.get_platform_display()} - {self.title}"
 
+
 class SocialAndAppSettings(models.Model):
     site_name = models.CharField(max_length=100, default="NL Makeover", verbose_name="Salon Name", blank=True, null=True)
     logo = models.ImageField(upload_to='logo/', blank=True, null=True, verbose_name="Salon Logo") # Cloudinary par save hoga
 
-# Naye dynamic fields hero section ke liye:
+    # Naye dynamic fields hero section ke liye:
     hero_tagline = models.CharField(max_length=200, default="Luxury Bridal Studio & Beauty Parlour", blank=True, null=True)
     hero_title = models.CharField(max_length=200, default="Redefining Your Elegance", blank=True, null=True)
     hero_description = models.TextField(default="Step into a world of glamour. Experience professional bridal makeup, high-end hair styling, and premium skin treatments tailored just for you.", blank=True, null=True)
@@ -99,3 +99,25 @@ class SocialAndAppSettings(models.Model):
 
     def __str__(self):
         return f"Site & App Settings ({self.site_name})"
+
+
+class LegalPage(models.Model):
+    PAGE_CHOICES = (
+        ('about', 'About Us'),
+        ('contact', 'Contact Us'),
+        ('privacy-policy', 'Privacy Policy'),
+        ('terms', 'Terms & Conditions'),
+        ('disclaimer', 'Disclaimer'),
+    )
+    
+    slug = models.CharField(max_length=50, choices=PAGE_CHOICES, unique=True, help_text="Select page type")
+    title = models.CharField(max_length=200, help_text="Heading of the page")
+    content = models.TextField(help_text="Detailed HTML/Text content for this page")
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.get_slug_display()
+
+    class Meta:
+        verbose_name = "Legal & Compliance Page"
+        verbose_name_plural = "Legal & Compliance Pages"

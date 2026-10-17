@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - NL Makeover</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-stone-950 text-stone-100 font-sans selection:bg-amber-500 selection:text-stone-950 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Include -->
+    {% include 'salon/header.html' %}
+
+    <!-- Main Content Area -->
+    <main class="max-w-4xl mx-auto px-4 py-12 w-full flex-grow">
+        <div class="bg-stone-900 p-8 rounded-2xl shadow-xl border border-stone-800">
+            <h1 class="text-3xl md:text-4xl font-bold text-amber-500 mb-6 border-b border-stone-800 pb-4">
+                {{ page.title }}
+            </h1>
+            
+            <div class="prose prose-invert max-w-none text-stone-300 leading-relaxed space-y-4">
+                {{ page.content|safe }}
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-stone-800">
+                <a href="{% url 'home' %}" class="inline-flex items-center gap-2 bg-amber-500 text-stone-950 font-semibold px-6 py-2.5 rounded-lg hover:bg-amber-400 transition">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Include -->
+    {% include 'salon/footer.html' %}
+
+</body>
+</html>

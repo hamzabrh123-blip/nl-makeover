@@ -16,12 +16,39 @@
             <video:title>{{ video.title|default:"NL Makeover Beauty & Hair Transformation" }}</video:title>
             <!-- Video Description -->
             <video:description>Watch trending hair makeover, bridal makeup, and beauty transformation reels by NL Makeover.</video:description>
-            <!-- Embed / Player Link -->
-            <video:player_loc>{{ video.video_url }}</video:player_loc>
+            <!-- Smart Embed Link -->
+            <video:player_loc>{{ video.get_embed_url }}</video:player_loc>
         </video:video>
         {% endfor %}
     </url>
     
+    <!-- Legal & Compliance Pages -->
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/about/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/contact/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/privacy-policy/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/terms/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/disclaimer/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
     <!-- Dynamic Service Pages -->
     {% for service in services %}
     <url>
