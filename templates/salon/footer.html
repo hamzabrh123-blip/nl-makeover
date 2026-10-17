@@ -71,7 +71,19 @@
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-stone-900 text-center text-xs text-stone-600">
-        &copy; 2026 NL Makeover. All rights reserved. Powered by Django.
+   <!-- Bottom Copyright, Legal Links & Admin -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-stone-900 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-stone-500">
+        <p>&copy; 2026 NL Makeover. All rights reserved. | Developed by <span class="text-amber-400 font-medium">Hamza Ahmad Naim</span> (<a href="tel:8299696482" class="hover:text-amber-400 transition">+91 8299696482</a>)</p>
+        
+        <!-- Legal & Compliance Links + Admin -->
+        <div class="flex flex-wrap items-center justify-center gap-6 text-stone-400">
+            <a href="{% url 'about' %}" class="hover:text-amber-400 transition">About Us</a>
+            <a href="{% url 'contact' %}" class="hover:text-amber-400 transition">Contact Us</a>
+            <a href="{% url 'privacy_policy' %}" class="hover:text-amber-400 transition">Privacy Policy</a>
+            <a href="{% url 'terms' %}" class="hover:text-amber-400 transition">Terms & Conditions</a>
+            <a href="{% url 'disclaimer' %}" class="hover:text-amber-400 transition">Disclaimer</a>
+            <span class="text-stone-700">|</span>
+            <a href="{% url 'admin:index' %}" class="hover:text-amber-400 transition flex items-center gap-1"><i class="fa-solid fa-lock text-[10px]"></i> Admin</a>
+        </div>
     </div>
 </footer>
