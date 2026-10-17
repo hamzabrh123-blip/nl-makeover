@@ -16,7 +16,13 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-e3b9$!k9&lim#g$-6p8@r
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'nlmakeover.in',
+    'www.nlmakeover.in',
+    '.onrender.com',  # Render ke default URL ke liye
+    '127.0.0.1',
+    'localhost',
+    ]
 
 # Application definition
 INSTALLED_APPS = [
