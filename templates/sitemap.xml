@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Home Page -->
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- Dynamic Service Pages (Agar aapke paas service detail page hai) -->
+    {% for service in services %}
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/service/{{ service.id }}/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    {% endfor %}
+</urlset>
