@@ -4,7 +4,9 @@ from salon.views import (
     home_view, 
     sitemap_view, 
     robots_txt_view,
-    legal_page_view
+    legal_page_view,
+    services_list_view,
+    videos_list_view
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -12,6 +14,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
+    
+    # Dedicated Service & Video Gallery Pages
+    path('services/', services_list_view, name='services_list'),
+    path('videos/', videos_list_view, name='videos_list'),
     
     # Legal & Compliance Pages (Footer Links ke liye zaroori hain)
     path('about/', legal_page_view, {'slug': 'about'}, name='about'),

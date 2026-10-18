@@ -10,24 +10,17 @@
             <div class="bg-stone-900/50 border border-stone-800 rounded-2xl p-4 flex flex-col justify-between shadow-lg">
                 <div class="relative w-full aspect-[9/16] bg-stone-950 rounded-xl overflow-hidden border border-stone-800">
 
-
-                    <!--iframe src="{{ video.get_embed_url }}" 
-                    class="w-full h-full border-0" scrolling="no" 
-                    allowtransparency="true" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowfullscreen-->
-
-                        <iframe
-    src="{{ video.get_embed_url }}"
-    class="w-full h-full border-0"
-    title="{{ video.title }}"
-    scrolling="no"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
+                    <!-- Original iframe structure intact with 'video-iframe' class for single-active playback control -->
+                    <iframe
+                        src="{{ video.get_embed_url }}"
+                        class="video-iframe w-full h-full border-0"
+                        title="{{ video.title }}"
+                        scrolling="no"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
                     </iframe>
-               
-               
+                
                 </div>
                 <p class="mt-4 text-sm text-stone-300 font-medium text-center">{{ video.title }}</p>
             </div>
@@ -35,5 +28,31 @@
             <p class="col-span-3 text-center text-stone-500 py-12">No videos added yet. Add Instagram/YouTube links in the Admin panel.</p>
             {% endfor %}
         </div>
+
+        <!-- View All Videos Button -->
+        <div class="text-center mt-12">
+            <a href="{% url 'videos_list' %}" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-stone-950 font-semibold px-8 py-3.5 rounded-xl transition shadow-lg shadow-amber-500/10">
+                View All Videos & Reels <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+        </div>
     </div>
 </section>
+
+<!-- Single-Active Video Pause Script (Jab ek video par interaction ho toh baaki pause ho jayein) -->
+<script>
+    document.addEventListener('click', function(event) {
+        const clickedContainer = event.target.closest('.relative');
+        if (clickedContainer) {
+            const currentIframe = clickedContainer.querySelector('.video-iframe');
+            if (currentIframe) {
+                document.querySelectorAll('.video-iframe').forEach(iframe => {
+                    if (iframe !== currentIframe) {
+                        const tempSrc = iframe.src;
+                        iframe.src = ''; // Instant stop/pause
+                        setTimeout(() => { iframe.src = tempSrc; }, 50); // Restore state safely
+                    }
+                });
+            }
+        }
+    });
+</script>

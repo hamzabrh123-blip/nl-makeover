@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <title>Video Gallery - {{ settings.site_name|default:"NL Makeover" }}</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-stone-950 text-stone-100 font-sans selection:bg-amber-500 selection:text-stone-950">
+
+    {% include 'salon/header.html' %}
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <!-- Gallery Heading -->
+        <div class="text-center mb-16">
+            <h1 class="text-3xl sm:text-4xl font-serif font-bold bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-600 bg-clip-text text-transparent">
+                Reels &amp; Transformations
+            </h1>
+            <p class="text-stone-400 mt-2">
+                Watch our latest work straight from Instagram &amp; YouTube
+            </p>
+        </div>
+
+        <!-- Same Gallery Card Design as Homepage -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            {% for video in videos %}
+
+            <div class="bg-stone-900/50 border border-stone-800 rounded-2xl p-4 flex flex-col justify-between shadow-lg">
+
+                <div class="relative w-full aspect-[9/16] bg-stone-950 rounded-xl overflow-hidden border border-stone-800">
+
+                    <!-- Same iframe structure as the working homepage gallery -->
+                    <iframe
+                       src="{{ video.get_embed_url }}{% if 'youtube.com/embed/' in video.get_embed_url %}?enablejsapi=1&origin={{ request.scheme }}://{{ request.get_host }}{% endif %}"
+                        class="video-iframe w-full h-full border-0"
+                        title="{{ video.title }}"
+                        scrolling="no"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+
+                </div>
+
+                <p class="mt-4 text-sm text-stone-300 font-medium text-center">
+                    {{ video.title }}
+                </p>
+
+            </div>
+
+            {% empty %}
+
+            <p class="col-span-full text-center text-stone-500 py-12">
+                No videos added yet. Add Instagram/YouTube links in the Admin panel.
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+        <!-- Back to Home -->
+        <div class="text-center mt-12">
+            <a href="{% url 'home' %}"
+               class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-stone-950 font-semibold px-8 py-3.5 rounded-xl transition shadow-lg shadow-amber-500/10">
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                Back to Home
+            </a>
+        </div>
+
+    </main>
+
+    {% include 'salon/footer.html' %}
+
+    <!-- One video at a time: stop other iframe players when interacting with one -->
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const frames = document.querySelectorAll('.video-iframe');
+
+    // YouTube players ko API commands receive karne ke liye ready karo
+    frames.forEach(function (frame) {
+        if (frame.src.includes('youtube.com/embed/')) {
+            frame.contentWindow.postMessage(
+                JSON.stringify({
+                    event: 'listening',
+                    id: frame.id || ''
+                }),
+                'https://www.youtube.com'
+            );
+        }
+    });
+
+    // Kisi YouTube video ke play hone par baaki YouTube videos pause karo
+    window.addEventListener('message', function (event) {
+        if (event.origin !== 'https://www.youtube.com') return;
+
+        let data = event.data;
+
+        try {
+            if (typeof data === 'string') data = JSON.parse(data);
+        } catch (e) {
+            return;
+        }
+
+        if (!data || data.event !== 'onStateChange' || data.info !== 1) {
+            return;
+        }
+
+        frames.forEach(function (frame) {
+            if (!frame.src.includes('youtube.com/embed/')) return;
+            if (frame.contentWindow === event.source) return;
+
+            frame.contentWindow.postMessage(
+                JSON.stringify({
+                    event: 'command',
+                    func: 'pauseVideo',
+                    args: []
+                }),
+                'https://www.youtube.com'
+            );
+        });
+    });
+});
+</script>
+</body>
+</html>

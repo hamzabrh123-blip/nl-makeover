@@ -5,9 +5,11 @@ from .models import Service, VideoEmbed, SocialAndAppSettings, SliderBanner, Leg
 
 
 def home_view(request):
-    banners = SliderBanner.objects.filter(is_active=True)
-    services = Service.objects.all()
-    videos = VideoEmbed.objects.filter(is_active=True)
+    banners = SliderBanner.objects.filter(is_active=True).order_by('-id')
+    # Home par sirf latest 6 services dikhayenge taaki clutter na ho
+    services = Service.objects.all().order_by('-id')[:6]
+    # Home par sirf latest 6 videos dikhayenge
+    videos = VideoEmbed.objects.filter(is_active=True).order_by('-id')[:6]
     settings = SocialAndAppSettings.objects.first()
     
     context = {
@@ -17,6 +19,39 @@ def home_view(request):
         'settings': settings,
     }
     return render(request, 'index.html', context)
+
+
+def services_list_view(request):
+    """Saari services ka dedicated page (templates/services_list.html)"""
+    services = Service.objects.all().order_by('-id')  # Nayi service sabse upar
+    settings = SocialAndAppSettings.objects.first()
+    context = {
+        'services': services,
+        'settings': settings,
+    }
+    return render(request, 'services_list.html', context)
+
+
+
+def videos_list_view(request):
+    """Saari videos/reels ka dedicated page."""
+    videos = VideoEmbed.objects.filter(
+        is_active=True
+    ).order_by('-id')
+
+    for video in videos:
+        print("PLATFORM:", video.platform)
+        print("ORIGINAL URL:", video.url)
+        print("EMBED URL:", video.get_embed_url)
+
+    settings = SocialAndAppSettings.objects.first()
+
+    context = {
+        'videos': videos,
+        'settings': settings,
+    }
+
+    return render(request, 'salon/videos_list.html', context)
 
 
 def legal_page_view(request, slug):
@@ -61,8 +96,8 @@ def legal_page_view(request, slug):
 
 
 def sitemap_view(request):
-    services = Service.objects.all()
-    videos = VideoEmbed.objects.filter(is_active=True)
+    services = Service.objects.all().order_by('-id')
+    videos = VideoEmbed.objects.filter(is_active=True).order_by('-id')
     
     context = {
         'services': services,

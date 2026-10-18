@@ -15,7 +15,7 @@
                 {% endif %}
                 <span class="text-xs uppercase tracking-wider text-amber-400 font-semibold bg-amber-950/30 px-3 py-1 rounded-md border border-amber-900/30">{{ service.category }}</span>
                 <h3 class="text-xl font-serif font-semibold mt-3 text-stone-100">{{ service.title }}</h3>
-                <p class="text-stone-400 text-sm mt-2 line-clamp-3">{{ service.description }}</p>
+                <p class="text-stone-400 text-sm mt-2 line-clamp-3">{{ service.description|striptags }}</p>
             </div>
             <div class="mt-6 pt-4 border-t border-stone-800 flex items-center justify-between">
                 <span class="text-amber-400 font-bold text-lg">₹ {{ service.price }}</span>
@@ -27,5 +27,12 @@
         {% empty %}
         <p class="col-span-3 text-center text-stone-500 py-12">No services added yet. Please add services from the Django Admin panel.</p>
         {% endfor %}
+    </div>
+
+    <!-- View All Services Button Added Here -->
+    <div class="text-center mt-12">
+        <a href="{% url 'services_list' %}" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-stone-950 font-semibold px-8 py-3.5 rounded-xl transition shadow-lg shadow-amber-500/10">
+            View All Services <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
     </div>
 </section>
