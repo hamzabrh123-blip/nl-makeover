@@ -6,8 +6,8 @@ from .models import Service, VideoEmbed, SocialAndAppSettings, SliderBanner, Leg
 
 def home_view(request):
     banners = SliderBanner.objects.filter(is_active=True).order_by('-id')
-    # Home par sirf latest 6 services dikhayenge taaki clutter na ho
-    services = Service.objects.all().order_by('-id')[:6]
+    # Home par ab services order/priority ke hisaab se aur sirf top 6 dikhayenge
+    services = Service.objects.all()[:6]
     # Home par sirf latest 6 videos dikhayenge
     videos = VideoEmbed.objects.filter(is_active=True).order_by('-id')[:6]
     settings = SocialAndAppSettings.objects.first()
@@ -23,7 +23,7 @@ def home_view(request):
 
 def services_list_view(request):
     """Saari services ka dedicated page (templates/services_list.html)"""
-    services = Service.objects.all().order_by('-id')  # Nayi service sabse upar
+    services = Service.objects.all()  # Model ki default ordering ('order', 'id') ke mutabiq aayengi
     settings = SocialAndAppSettings.objects.first()
     context = {
         'services': services,
@@ -96,7 +96,7 @@ def legal_page_view(request, slug):
 
 
 def sitemap_view(request):
-    services = Service.objects.all().order_by('-id')
+    services = Service.objects.all()
     videos = VideoEmbed.objects.filter(is_active=True).order_by('-id')
     
     context = {

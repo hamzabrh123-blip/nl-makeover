@@ -20,9 +20,13 @@ class Service(models.Model):
     description = RichTextField(verbose_name="Service Description")  # CKEditor added here
     image = models.ImageField(upload_to='services/', blank=True, null=True, verbose_name="Service Image") # Cloudinary par save hoga
     is_featured = models.BooleanField(default=False, verbose_name="Show on Home Page")
+    order = models.PositiveIntegerField(default=0, verbose_name="Display Order / Priority (e.g. 1, 2, 3)")
 
     def __str__(self):
-        return self.title
+        return f"{self.order}. {self.title}"
+
+    class Meta:
+        ordering = ['order', 'id']
     
 class VideoEmbed(models.Model):
     PLATFORM_CHOICES = (
@@ -186,7 +190,7 @@ class LegalPage(models.Model):
     PAGE_CHOICES = (
         ('about', 'About Us'),
         ('contact', 'Contact Us'),
-        ('privacy-policy', 'Privacy Policy'),
+        ('privacy-pattern', 'Privacy Policy'),
         ('terms', 'Terms & Conditions'),
         ('disclaimer', 'Disclaimer'),
     )

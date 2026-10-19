@@ -4,7 +4,9 @@ from .models import Service, VideoEmbed, SocialAndAppSettings, SliderBanner, Leg
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'price', 'is_featured')
+    list_display = ('order', 'title', 'category', 'price', 'is_featured')
+    list_editable = ('order', 'is_featured')
+    list_display_links = ('title',)  # Yeh zaroori hai jab pehla field ('order') editable ho
     list_filter = ('category', 'is_featured')
     search_fields = ('title', 'description')
 
