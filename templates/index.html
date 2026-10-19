@@ -5,11 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="zDQvh5QxjLRGGZkgvNN6Gf7wW-o7dEwXhPQhSjXOJUw" />
     <title>{{ settings.site_name|default:"NL Makeover" }} Luxury Beauty Parlour & Bridal Studio</title>
+
+    <!-- Tab Icon / Favicon -->
+    {% if settings.logo %}
+    <link rel="icon" type="image/x-icon" href="{{ settings.logo.url }}">
+    <link rel="shortcut icon" href="{{ settings.logo.url }}">
+    {% endif %}
+
+    <meta name="description" content="NL Makeover in Bahraich is your ultimate luxury beauty parlour and bridal studio offering professional bridal makeup, advanced skin treatments, hair styling, and glamorous makeovers by expert stylists. Book your appointment today!">
+
+
+<!-- Open Graph / Facebook / WhatsApp Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}/">
+    <meta property="og:title" content="{{ settings.site_name|default:'NL Makeover' }} Luxury Beauty Parlour & Bridal Studio">
+    <meta property="og:description" content="NL Makeover in Bahraich is your ultimate luxury beauty parlour and bridal studio offering professional bridal makeup, advanced skin treatments, hair styling, and glamorous makeovers.">
+    <meta property="og:image" content="https://res.cloudinary.com/dvoqsrkkq/image/upload/v1792176767/banners/Gemini_Generated_Image_r6l4jdr6l4jdr6l4_result_e4zb8h.webp">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ request.scheme }}://{{ request.get_host }}/">
+    <meta name="twitter:title" content="{{ settings.site_name|default:'NL Makeover' }} Luxury Beauty Parlour & Bridal Studio">
+    <meta name="twitter:description" content="NL Makeover in Bahraich is your ultimate luxury beauty parlour and bridal studio offering professional bridal makeup, advanced skin treatments, hair styling, and glamorous makeovers.">
+    <meta name="twitter:image" content="https://res.cloudinary.com/dvoqsrkkq/image/upload/v1792176767/banners/Gemini_Generated_Image_r6l4jdr6l4jdr6l4_result_e4zb8h.webp">
+   
+
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Flowbite Carousel CSS/JS for Smooth Slider -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+
+    <!-- Anti-Copy CSS Protection -->
+    <style>
+        /* Disable text selection across all elements */
+        body, html {
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10 and IE 11 */
+            user-select: none; /* Standard syntax */
+        }
+        /* Disable image drag & drop */
+        img {
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+            pointer-events: none; /* Disables right click / save image directly */
+        }
+    </style>
 
     <!-- Google Structured Data (JSON-LD Schema) for NL Makeover -->
     <script type="application/ld+json">
@@ -56,7 +100,7 @@
     }
     </script>
 </head>
-<body class="bg-stone-950 text-stone-100 font-sans selection:bg-amber-500 selection:text-stone-950">
+<body class="bg-stone-950 text-stone-100 font-sans selection:bg-amber-500 selection:text-stone-950" oncontextmenu="return false;">
 
     <!-- Header Include -->
     {% include 'salon/header.html' %}
@@ -78,5 +122,60 @@
 
     <!-- Flowbite JS for Carousel Interactive Controls -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+
+    <!-- Anti-Copy & Anti-Inspect JS Protection -->
+    <script>
+        // Disable Right Click
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        // Disable Copy, Cut, Paste
+        document.addEventListener('copy', function (e) {
+            e.preventDefault();
+        });
+        document.addEventListener('cut', function (e) {
+            e.preventDefault();
+        });
+
+        // Disable Common Keyboard Shortcuts (Ctrl+C, Ctrl+U, Ctrl+S, Ctrl+Shift+I, F12)
+        document.addEventListener('keydown', function (e) {
+            // F12 key
+            if (e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+I / Cmd+Option+I (Inspect)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+Shift+J / Cmd+Option+J (Console)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+U (View Source)
+            if (e.ctrlKey && e.keyCode === 85) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+C (Copy)
+            if (e.ctrlKey && e.keyCode === 67) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+A (Select All)
+            if (e.ctrlKey && e.keyCode === 65) {
+                e.preventDefault();
+                return false;
+            }
+            // Ctrl+S (Save)
+            if (e.ctrlKey && e.keyCode === 83) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
 </body>
 </html>

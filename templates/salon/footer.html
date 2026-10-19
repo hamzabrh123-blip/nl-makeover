@@ -15,22 +15,39 @@
             </div>
         </div>
 
-        <!-- Col 2: Connect Links -->
-        <div>
-            <h4 class="text-sm font-semibold uppercase tracking-wider text-stone-300 mb-4">Connect With Us</h4>
-            <div class="flex flex-col space-y-3 text-sm text-stone-400">
-                {% if settings.whatsapp_channel_url %}
-                <a href="{{ settings.whatsapp_channel_url }}" target="_blank" class="hover:text-amber-400 transition"><i class="fa-brands fa-whatsapp text-emerald-500 mr-2"></i> Join WhatsApp Channel</a>
-                {% endif %}
-                {% if settings.facebook_url %}
-                <a href="{{ settings.facebook_url }}" target="_blank" class="hover:text-amber-400 transition"><i class="fa-brands fa-facebook text-blue-500 mr-2"></i> Facebook Page</a>
-                {% endif %}
-                {% if settings.instagram_url %}
-                <a href="{{ settings.instagram_url }}" target="_blank" class="hover:text-amber-400 transition"><i class="fa-brands fa-instagram text-amber-400 mr-2"></i> Instagram Profile</a>
-                {% endif %}
-                {% if settings.youtube_url %}
-                <a href="{{ settings.youtube_url }}" target="_blank" class="hover:text-amber-400 transition"><i class="fa-brands fa-youtube text-red-500 mr-2"></i> YouTube Channel</a>
-                {% endif %}
+        <!-- Col 2: Connect Links & Director Profile at the Bottom -->
+        <div class="flex flex-col justify-between space-y-6">
+            <div>
+                <h4 class="text-sm font-semibold uppercase tracking-wider text-stone-300 mb-4">Connect With Us</h4>
+                <div class="flex flex-col space-y-3 text-sm text-stone-400">
+                    {% if settings.whatsapp_channel_url %}
+                    <a href="{{ settings.whatsapp_channel_url }}" target="_blank" class="hover:text-amber-400 transition"><i class="fa-brands fa-whatsapp text-emerald-500 mr-2"></i> Join WhatsApp Channel</a>
+                    {% endif %}
+                    {% if settings.facebook_url %}
+                    <a href="{{ settings.facebook_url }}" target="_blank" class="hover:text-amber-400 transition"><i class="fa-brands fa-facebook text-blue-500 mr-2"></i> Facebook Page</a>
+                    {% endif %}
+                    {% if settings.instagram_url %}
+                    <a href="{{ settings.instagram_url }}" target="_blank" class="hover:text-amber-400 transition"><i class="fa-brands fa-instagram text-amber-400 mr-2"></i> Instagram Profile</a>
+                    {% endif %}
+                    {% if settings.youtube_url %}
+                    <a href="{{ settings.youtube_url }}" target="_blank" class="hover:text-amber-400 transition"><i class="fa-brands fa-youtube text-red-500 mr-2"></i> YouTube Channel</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Director Profile Section (At the bottom of Column 2) -->
+            <div class="pt-4 border-t border-stone-900 flex items-center gap-4">
+                <!-- Circular Director Image -->
+                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-amber-500/50 flex-shrink-0 bg-stone-900">
+                    <img src="https://res.cloudinary.com/dvoqsrkkq/image/upload/v1792396180/f5b6b8fc-dd74-4550-bfa1-1797806ca0e8_mq1lls.jpg" alt="Mohd. Sayeed Khan" class="w-full h-full object-cover">
+                </div>
+                <!-- Director Details -->
+                <div class="text-xs space-y-1 text-stone-300">
+                    <p class="font-semibold text-amber-400 text-sm">Director : Mohd. Sayeed Khan</p>
+                    <p class="text-stone-400 leading-tight">Passout From Jamia Millia Islamia University, New Delhi, India</p>
+                    <p class="text-stone-400 italic">Teacher, Motivator, Mentor (Past 10 Years)</p>
+                    <p class="text-stone-300 pt-0.5"><i class="fa-solid fa-phone text-amber-400 mr-1 text-[10px]"></i> 8931053026</p>
+                </div>
             </div>
         </div>
 
