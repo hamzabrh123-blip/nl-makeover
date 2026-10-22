@@ -3,6 +3,34 @@ from urllib.parse import urlparse, parse_qs
 from django.db import models
 from ckeditor.fields import RichTextField
 
+class Certificate(models.Model):
+    title = models.CharField(max_length=200)
+    certificate_number = models.CharField(
+        max_length=150, blank=True
+    )
+    issuing_authority = models.CharField(
+        max_length=200, blank=True
+    )
+    issue_date = models.DateField(
+        null=True, blank=True
+    )
+    expiry_date = models.DateField(
+        null=True, blank=True
+    )
+    description = RichTextField(blank=True)
+    certificate_file = models.FileField(
+        upload_to="certificates/"
+    )
+    is_active = models.BooleanField(default=True)
+    display_order = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["display_order", "-created_at"]
+
+    def __str__(self):
+        return self.title
+
 
 class SliderBanner(models.Model):
     title = models.CharField(max_length=150, blank=True, null=True)

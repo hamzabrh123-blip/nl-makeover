@@ -1,27 +1,80 @@
 <!-- Top Navigation / Header -->
-<header class="sticky top-0 z-50 bg-stone-950/80 backdrop-blur-md border-b border-stone-800">
+<header class="sticky top-0 z-50 bg-stone-950/80 backdrop-blur-md border-b border-stone-800/80 shadow-2xl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        <a href="#" class="flex items-center gap-3">
+        
+        <!-- Left: Logo + Title + Certification Badges -->
+        <a href="#" class="flex items-center gap-3 group">
             {% if settings.logo %}
-                <img src="{{ settings.logo.url }}" alt="NL Makeover Logo" class="h-16 w-16 sm:h-20 sm:w-20 rounded-xl object-contain border border-amber-500/50 shadow-lg bg-black p-1">
+                <img src="{{ settings.logo.url }}" alt="NL Makeover Logo" class="h-14 w-14 sm:h-16 sm:w-16 rounded-xl object-contain border border-amber-500/40 shadow-md shadow-amber-500/10 bg-black p-1 transition duration-300 group-hover:border-amber-400">
+            {% else %}
+                <div class="h-12 w-12 sm:h-14 sm:w-14 rounded-xl border border-amber-500/40 shadow-md shadow-amber-500/10 bg-stone-900 flex items-center justify-center font-serif text-amber-400 font-bold text-xl tracking-wider transition duration-300 group-hover:border-amber-400">
+                    NL
+                </div>
             {% endif %}
-            <span class="text-xl sm:text-2xl font-serif tracking-wider font-bold bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-600 bg-clip-text text-transparent">
-                {{ settings.site_name|default:"NL Makeover" }}
-            </span>
+            
+            <div class="flex flex-col justify-center">
+                <span class="text-xl sm:text-2xl font-serif tracking-wider font-bold bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-600 bg-clip-text text-transparent leading-tight">
+                    {{ settings.site_name|default:"NL Makeover" }}
+                </span>
+                
+               <!-- ISO CERTIFIED & MSME REGISTERED Clickable Badges -->
+<div class="flex flex-wrap items-center gap-2 mt-1">
+
+    <!-- ISO Certificate Button -->
+    <a href="/certificates/iso/"
+       class="inline-flex items-center gap-1.5 text-[11px] sm:text-[12px] font-extrabold tracking-wider uppercase text-amber-300 bg-amber-500/15 border border-amber-500/40 px-3 py-1.5 rounded-md shadow-md backdrop-blur-sm hover:bg-amber-500/30 hover:border-amber-400 transition duration-300 cursor-pointer">
+        <i class="fa-solid fa-certificate text-[10px] sm:text-[11px] text-amber-400"></i>
+        ISO CERTIFIED
+        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+    </a>
+
+    <!-- MSME Registration Button -->
+    <a href="/certificates/msme/"
+       class="inline-flex items-center gap-1.5 text-[11px] sm:text-[12px] font-extrabold tracking-wider uppercase text-emerald-300 bg-emerald-500/15 border border-emerald-500/40 px-3 py-1.5 rounded-md shadow-md backdrop-blur-sm hover:bg-emerald-500/30 hover:border-emerald-400 transition duration-300 cursor-pointer">
+        <i class="fa-solid fa-shield-halved text-[10px] sm:text-[11px] text-emerald-400"></i>
+        MSME REGISTERED
+        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+    </a>
+
+</div>
+            </div>
         </a>
-        <!-- Nav links -->
-        <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide text-stone-300">
-            <a href="#banners" class="hover:text-amber-400 transition">Highlights</a>
-            <a href="#services" class="hover:text-amber-400 transition">Services</a>
-            <a href="#gallery" class="hover:text-amber-400 transition">Reels & Gallery</a>
-            <a href="#contact" class="hover:text-amber-400 transition">Contact & Location</a>
-        </nav>
+
+        <!-- Middle: Nav links -->
+<nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide text-stone-300">
+    <a href="#banners" class="hover:text-amber-400 transition-colors duration-200">
+        Highlights
+    </a>
+
+    <a href="#services" class="hover:text-amber-400 transition-colors duration-200">
+        Services
+    </a>
+
+    <a href="#gallery" class="hover:text-amber-400 transition-colors duration-200">
+        Reels & Gallery
+    </a>
+
+    <a href="#contact" class="hover:text-amber-400 transition-colors duration-200">
+        Contact & Location
+    </a>
+
+    <!-- Premium Academy Hub Link -->
+    <a href="/certificates/academic/"
+       class="inline-flex items-center gap-2 rounded-full border border-amber-400/50 bg-amber-400/10 px-4 py-2 text-amber-300 font-semibold shadow-sm hover:bg-amber-400 hover:text-stone-950 hover:border-amber-400 transition-all duration-300">
+        <i class="fa-solid fa-graduation-cap"></i>
+        Academy Hub
+        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+    </a>
+</nav>
+
+        <!-- Right: Action Button -->
         <div>
             {% if settings.apk_file %}
-            <a href="{{ settings.apk_file.url }}" class="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-stone-950 font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-full shadow-lg transition">
+            <a href="{{ settings.apk_file.url }}" class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-stone-950 font-bold text-xs sm:text-sm px-4 py-2.5 rounded-full shadow-lg shadow-amber-500/20 transition transform hover:-translate-y-0.5">
                 <i class="fa-solid fa-download"></i> Download App
             </a>
             {% endif %}
         </div>
+
     </div>
 </header>

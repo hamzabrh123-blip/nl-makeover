@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from .models import Service, VideoEmbed, SocialAndAppSettings, SliderBanner, LegalPage
+from .models import Service, VideoEmbed, SocialAndAppSettings, SliderBanner, LegalPage, Certificate
+
 
 
 def home_view(request):
@@ -94,7 +95,59 @@ def legal_page_view(request, slug):
 
     return render(request, 'legal_page.html', {'page': page, 'slug': slug})
 
+def certificates_view(request):
+    certificates = Certificate.objects.filter(
+        is_active=True
+    ).order_by("display_order", "-created_at")
 
+    settings = SocialAndAppSettings.objects.first()
+
+    return render(request, "salon/certificates.html", {
+        "certificates": certificates,
+        "settings": settings,
+    })
+
+
+def iso_certificate_view(request):
+    certificates = Certificate.objects.filter(
+        is_active=True,
+        title__icontains="ISO"
+    ).order_by("display_order", "-created_at")
+
+    settings = SocialAndAppSettings.objects.first()
+
+    return render(request, "salon/certificates/iso.html", {
+        "certificates": certificates,
+        "settings": settings,
+    })
+
+
+def msme_certificate_view(request):
+    certificates = Certificate.objects.filter(
+        is_active=True,
+        title__icontains="MSME"
+    ).order_by("display_order", "-created_at")
+
+    settings = SocialAndAppSettings.objects.first()
+
+    return render(request, "salon/certificates/msme.html", {
+        "certificates": certificates,
+        "settings": settings,
+    })
+
+
+def academic_certificate_view(request):
+    certificates = Certificate.objects.filter(
+        is_active=True,
+        title__icontains="Academic"
+    ).order_by("display_order", "-created_at")
+
+    settings = SocialAndAppSettings.objects.first()
+
+    return render(request, "salon/certificates/academic.html", {
+        "certificates": certificates,
+        "settings": settings,
+    })
 def sitemap_view(request):
     services = Service.objects.all()
     videos = VideoEmbed.objects.filter(is_active=True).order_by('-id')

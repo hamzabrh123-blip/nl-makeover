@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Academic Course Certificates | NL Makeover</title>
+    <meta name="description" content="View academic course certificates and professional training credentials from NL Makeover.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-stone-950 text-stone-100 min-h-screen">
+
+    {% include "salon/header.html" %}
+
+    <main class="max-w-6xl mx-auto px-4 py-12 md:py-16">
+
+        <!-- Page Heading -->
+        <div class="text-center mb-12">
+            <span class="text-amber-400 uppercase tracking-[0.25em] text-xs font-semibold">
+                Learning • Training • Achievement
+            </span>
+
+            <h1 class="text-3xl md:text-5xl font-serif font-bold mt-4 mb-5">
+                Academic Course <span class="text-amber-400">Certificates</span>
+            </h1>
+
+            <p class="text-stone-400 max-w-2xl mx-auto leading-7">
+                Explore our academic courses, professional training achievements
+                and certificates awarded for completed learning programs.
+            </p>
+        </div>
+
+        <!-- Certificates -->
+        {% if certificates %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            {% for certificate in certificates %}
+            <article class="bg-stone-900 border border-stone-800 rounded-2xl overflow-hidden hover:border-amber-500/60 transition duration-300">
+
+                <div class="p-6">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-xl mb-5">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+
+                    <h2 class="text-xl font-semibold text-stone-100 mb-3">
+                        {{ certificate.title }}
+                    </h2>
+
+                    {% if certificate.description %}
+                    <p class="text-stone-400 text-sm leading-6 mb-5">
+                        {{ certificate.description }}
+                    </p>
+                    {% endif %}
+
+                    {% if certificate.certificate_number %}
+                    <p class="text-sm text-stone-400 mb-2">
+                        <span class="text-stone-200 font-medium">Certificate No:</span>
+                        {{ certificate.certificate_number }}
+                    </p>
+                    {% endif %}
+
+                    {% if certificate.issuing_authority %}
+                    <p class="text-sm text-stone-400 mb-2">
+                        <span class="text-stone-200 font-medium">Issued By:</span>
+                        {{ certificate.issuing_authority }}
+                    </p>
+                    {% endif %}
+
+                    {% if certificate.issue_date %}
+                    <p class="text-sm text-stone-400 mb-5">
+                        <span class="text-stone-200 font-medium">Issue Date:</span>
+                        {{ certificate.issue_date|date:"d M Y" }}
+                    </p>
+                    {% endif %}
+
+                    {% if certificate.certificate_file %}
+                    <a href="{{ certificate.certificate_file.url }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="inline-flex items-center justify-center gap-2 w-full rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-semibold px-5 py-3 transition">
+                        <i class="fa-solid fa-file-arrow-up"></i>
+                        View Certificate
+                    </a>
+                    {% endif %}
+                </div>
+
+            </article>
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+        <div class="max-w-2xl mx-auto text-center border border-stone-800 bg-stone-900 rounded-2xl px-6 py-12">
+            <i class="fa-solid fa-graduation-cap text-4xl text-amber-400 mb-5"></i>
+
+            <h2 class="text-xl font-semibold mb-3">
+                Certificates Coming Soon
+            </h2>
+
+            <p class="text-stone-400 leading-7">
+                Academic course certificates will be displayed here once they
+                have been uploaded and published by the administrator.
+            </p>
+        </div>
+        {% endif %}
+
+        <!-- Back Links -->
+        <div class="flex flex-wrap justify-center gap-4 mt-12">
+            <a href="/certificates/"
+               class="border border-stone-700 hover:border-amber-400 text-stone-200 hover:text-amber-400 rounded-xl px-5 py-3 transition">
+                <i class="fa-solid fa-arrow-left mr-2"></i>
+                All Certificates
+            </a>
+
+            <a href="/"
+               class="border border-stone-700 hover:border-amber-400 text-stone-200 hover:text-amber-400 rounded-xl px-5 py-3 transition">
+                <i class="fa-solid fa-house mr-2"></i>
+                Home
+            </a>
+        </div>
+
+    </main>
+
+    {% include "salon/footer.html" %}
+
+</body>
+</html>

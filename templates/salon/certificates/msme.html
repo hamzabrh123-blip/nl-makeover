@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MSME Registration | NL Makeover</title>
+
+    <meta name="description"
+          content="View the MSME registration information of NL Makeover, Bahraich.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-stone-950 text-stone-100 font-sans">
+
+    {% include 'salon/header.html' %}
+
+    <main class="min-h-screen px-4 py-14">
+
+        <div class="max-w-4xl mx-auto">
+
+            <!-- Page Heading -->
+            <div class="text-center mb-10">
+
+                <div class="inline-flex items-center justify-center
+                            w-20 h-20 rounded-full bg-emerald-500/10
+                            border border-emerald-500/30 mb-5">
+
+                    <i class="fa-solid fa-shield-halved
+                              text-4xl text-emerald-400"></i>
+                </div>
+
+                <p class="text-emerald-400 uppercase tracking-[0.25em]
+                          text-sm font-bold mb-3">
+                    Business Registration
+                </p>
+
+                <h1 class="text-3xl md:text-5xl font-bold text-emerald-300">
+                    MSME Registration
+                </h1>
+
+                <p class="text-stone-400 mt-4 max-w-2xl mx-auto">
+                    Explore the MSME registration information for NL Makeover.
+                </p>
+
+            </div>
+
+            <!-- Registration Details -->
+            <section class="bg-stone-900 border border-emerald-500/30
+                            rounded-2xl p-6 md:p-10 shadow-xl">
+
+                <div class="flex items-center gap-3 mb-6">
+
+                    <i class="fa-solid fa-file-circle-check
+                              text-emerald-400 text-2xl"></i>
+
+                    <h2 class="text-xl md:text-2xl font-bold">
+                        Registration Details
+                    </h2>
+
+                </div>
+
+                <p class="text-stone-400 leading-7 mb-8">
+                    This page displays the MSME registration information
+                    and certificate of NL Makeover.
+                </p>
+
+                <!-- Automatically Display Uploaded Certificates -->
+                {% if certificates %}
+
+                    {% for certificate in certificates %}
+
+                        <div class="border border-emerald-500/30
+                                    rounded-xl p-5 md:p-8 mb-8">
+
+                            <!-- Certificate Title -->
+                            <div class="flex items-center gap-3 mb-6">
+
+                                <i class="fa-solid fa-file-circle-check
+                                          text-3xl text-emerald-400"></i>
+
+                                <h3 class="text-lg md:text-xl font-bold">
+                                    {{ certificate.title }}
+                                </h3>
+
+                            </div>
+
+                            <!-- Certificate Number -->
+                            {% if certificate.certificate_number %}
+                                <p class="text-stone-300 mb-3">
+                                    <strong>Certificate Number:</strong>
+                                    {{ certificate.certificate_number }}
+                                </p>
+                            {% endif %}
+
+                            <!-- Issuing Authority -->
+                            {% if certificate.issuing_authority %}
+                                <p class="text-stone-300 mb-3">
+                                    <strong>Issuing Authority:</strong>
+                                    {{ certificate.issuing_authority }}
+                                </p>
+                            {% endif %}
+
+                            <!-- Issue Date -->
+                            {% if certificate.issue_date %}
+                                <p class="text-stone-300 mb-3">
+                                    <strong>Issue Date:</strong>
+                                    {{ certificate.issue_date|date:"d M Y" }}
+                                </p>
+                            {% endif %}
+
+                            <!-- Expiry Date -->
+                            {% if certificate.expiry_date %}
+                                <p class="text-stone-300 mb-3">
+                                    <strong>Expiry Date:</strong>
+                                    {{ certificate.expiry_date|date:"d M Y" }}
+                                </p>
+                            {% endif %}
+
+                            <!-- Description -->
+                            {% if certificate.description %}
+                                <div class="text-stone-300 leading-7 my-5">
+                                    {{ certificate.description|linebreaks }}
+                                </div>
+                            {% endif %}
+
+                            <!-- Uploaded Certificate File -->
+                            {% if certificate.certificate_file %}
+
+                                <div class="mt-6">
+
+                                    <div class="rounded-xl overflow-hidden
+                                                bg-white border border-stone-700">
+
+                                        <iframe
+                                            src="{{ certificate.certificate_file.url }}"
+                                            title="{{ certificate.title }}"
+                                            class="w-full h-[500px] md:h-[750px]"
+                                            loading="lazy">
+                                        </iframe>
+
+                                    </div>
+
+                                    <!-- Open Original File -->
+                                    <a
+                                        href="{{ certificate.certificate_file.url }}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="inline-flex items-center gap-2
+                                               mt-5 px-5 py-3 rounded-lg
+                                               bg-emerald-500 hover:bg-emerald-400
+                                               text-stone-950 font-bold transition">
+
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                                        View / Open Certificate
+
+                                    </a>
+
+                                </div>
+
+                            {% else %}
+
+                                <p class="text-amber-400 mt-4">
+                                    Certificate file has not been uploaded.
+                                </p>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <!-- No Certificate Available -->
+                    <div class="border border-dashed
+                                border-emerald-500/30 rounded-xl
+                                p-8 text-center">
+
+                        <i class="fa-regular fa-file-pdf
+                                  text-5xl text-emerald-400 mb-4"></i>
+
+                        <h3 class="text-lg font-bold text-stone-100 mb-2">
+                            MSME Registration Certificate
+                        </h3>
+
+                        <p class="text-sm text-stone-400">
+                            No active MSME certificate is available yet.
+                            Please check the certificate in the admin panel.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+                <!-- Back Button -->
+                <a href="/certificates/"
+                   class="inline-flex items-center gap-2 mt-8
+                          text-emerald-300 hover:text-emerald-200
+                          font-semibold transition">
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    Back to Certificates &amp; Registrations
+
+                </a>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    {% include 'salon/footer.html' %}
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Service, VideoEmbed, SocialAndAppSettings, SliderBanner, LegalPage
+from .models import Service, VideoEmbed, SocialAndAppSettings, SliderBanner, LegalPage, Certificate
+
 
 
 @admin.register(Service)
@@ -35,3 +36,20 @@ class SettingsAdmin(admin.ModelAdmin):
 class LegalPageAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'updated_at')
     readonly_fields = ('updated_at',)
+
+@admin.register(Certificate)
+class CertificateAdmin(admin.ModelAdmin):
+    list_display = (
+        'display_order',
+        'title',
+        'certificate_number',
+        'issuing_authority',
+        'is_active',
+    )
+
+    list_editable = ('display_order', 'is_active')
+    list_display_links = ('title',)
+    list_filter = ('is_active',)
+    search_fields = ('title', 'certificate_number', 'issuing_authority')
+    ordering = ('display_order', '-created_at')
+    readonly_fields = ('created_at',)
