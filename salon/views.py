@@ -32,7 +32,15 @@ def services_list_view(request):
     }
     return render(request, 'services_list.html', context)
 
-
+def service_detail_view(request, pk):
+    """Individual service detail page to resolve Googlebot crawling errors for /service/<pk>/"""
+    service = get_object_or_404(Service, pk=pk)
+    settings = SocialAndAppSettings.objects.first()
+    context = {
+        'service': service,
+        'settings': settings,
+    }
+    return render(request, 'salon/service_detail.html', context)
 
 def videos_list_view(request):
     """Saari videos/reels ka dedicated page."""

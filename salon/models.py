@@ -192,6 +192,34 @@ class VideoEmbed(models.Model):
     def __str__(self):
         return f"{self.get_platform_display()} - {self.title}"
 
+class Offer(models.Model):
+    OFFER_TYPE_CHOICES = (
+        ('weekly', 'Weekly Offer'),
+        ('deal', 'Deal of the Day'),
+    )
+
+    offer_type = models.CharField(
+        max_length=20, 
+        choices=OFFER_TYPE_CHOICES, 
+        default='deal',
+        verbose_name="Offer Type"
+    )
+    title = models.CharField(max_length=150, verbose_name="Offer Title (e.g., Bridal Glow Week)")
+    subtitle = models.CharField(max_length=200, blank=True, null=True, verbose_name="Subtitle / Discount Text (e.g., Flat 25% OFF)")
+    original_price = models.CharField(max_length=50, blank=True, null=True, verbose_name="Original Price (Optional)")
+    discount_price = models.CharField(max_length=50, blank=True, null=True, verbose_name="Offer / Deal Price (Optional)")
+    description = RichTextField(blank=True, null=True, verbose_name="Offer Details")
+    banner_image = models.ImageField(upload_to='offers/', blank=True, null=True, verbose_name="Offer Banner / Image")
+    valid_till = models.CharField(max_length=100, blank=True, null=True, verbose_name="Validity Text (e.g., Sunday 11:59 PM / Today Only)")
+    is_active = models.BooleanField(default=True, verbose_name="Show on Website")
+    display_order = models.PositiveIntegerField(default=0, verbose_name="Display Order")
+
+    def __str__(self):
+        return f"[{self.get_offer_type_display()}] {self.title}"
+
+    class Meta:
+        ordering = ['display_order', '-id']
+
 class SocialAndAppSettings(models.Model):
     site_name = models.CharField(max_length=100, default="NL Makeover", verbose_name="Salon Name", blank=True, null=True)
     logo = models.ImageField(upload_to='logo/', blank=True, null=True, verbose_name="Salon Logo") # Cloudinary par save hoga

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ service.name }} | NL Makeover</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-stone-950 text-stone-100 font-sans">
+    {% include 'salon/header.html' %}
+    <main class="min-h-screen px-4 py-14">
+        <div class="max-w-4xl mx-auto bg-stone-900 border border-stone-800 rounded-2xl p-8">
+            <h1 class="text-3xl font-bold text-amber-300 mb-4">{{ service.name }}</h1>
+            <p class="text-stone-300 leading-7 mb-6">{{ service.description|safe }}</p>
+            {% if service.price %}
+            <p class="text-amber-400 font-semibold mb-6">Price: ₹{{ service.price }}</p>
+            {% endif %}
+            <a href="/services/" class="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300">
+                <i class="fa-solid fa-arrow-left"></i> Back to Services
+            </a>
+        </div>
+    </main>
+    {% include 'salon/footer.html' %}
+</body>
+</html>

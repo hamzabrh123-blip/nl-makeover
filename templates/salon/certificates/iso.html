@@ -14,6 +14,26 @@
 
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+          
+    <!-- Security Style & Script -->
+    <style>
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        /* Yeh overlay par right-click aur extra icons/logo ko touch hone se rorega */
+        .secure-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+            background: transparent;
+        }
+    </style>
 </head>
 
 <body class="bg-stone-950 text-stone-100 font-sans">
@@ -124,7 +144,7 @@
                             <!-- Description -->
                             {% if certificate.description %}
                                 <div class="text-stone-300 leading-7 my-5">
-                                    {{ certificate.description|linebreaks }}
+                                    {{ certificate.description|safe }}
                                 </div>
                             {% endif %}
 
@@ -133,33 +153,22 @@
 
                                 <div class="mt-6">
 
-                                    <div class="rounded-xl overflow-hidden
-                                                bg-white border border-stone-700">
+                                    <!-- Added 'relative overflow-hidden' to trap iframe and hide external logos/bars -->
+                                    <div class="relative rounded-xl overflow-hidden
+                                                bg-white border border-stone-700 h-[900px] md:h-[1200px]">
 
+                                        <!-- PDF Viewer with strict parameters to hide toolbar, navpanes, and scrollbars -->
                                         <iframe
-                                            src="{{ certificate.certificate_file.url }}"
+                                            src="{{ certificate.certificate_file.url }}#toolbar=0&navpanes=0&scrollbar=0&statusbar=0&messages=0"
                                             title="{{ certificate.title }}"
-                                            class="w-full h-[500px] md:h-[750px]"
+                                            class="w-full h-full border-0 select-none"
                                             loading="lazy">
                                         </iframe>
 
+                                        <!-- Transparent Security Overlay to block direct right-clicks and downloads -->
+                                        <div class="secure-overlay" oncontextmenu="return false;"></div>
+
                                     </div>
-
-                                    <!-- Open Original File -->
-                                    <a
-                                        href="{{ certificate.certificate_file.url }}"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        class="inline-flex items-center gap-2
-                                               mt-5 px-5 py-3 rounded-lg
-                                               bg-sky-400 hover:bg-sky-300
-                                               text-stone-950 font-bold transition">
-
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-
-                                        View / Open Certificate
-
-                                    </a>
 
                                 </div>
 
@@ -218,5 +227,16 @@
 
     {% include 'salon/footer.html' %}
 
+    <!-- Script to disable right click, copy and screenshot shortcuts -->
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('copy', event => event.preventDefault());
+        document.addEventListener('keydown', function(e) {
+            if (e.key == 'PrintScreen' || (e.ctrlKey && (e.key === 'p' || e.key === 's' || e.key === 'u' || e.key === 'c'))) {
+                e.preventDefault();
+                alert("Action restricted on NL Makeover!");
+            }
+        });
+    </script>
 </body>
 </html>
