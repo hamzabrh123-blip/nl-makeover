@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404
+import urllib.parse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 from .models import Service, VideoEmbed, SocialAndAppSettings, SliderBanner, LegalPage, Certificate
+from .offer_models import SpecialOffer
 
 
 
@@ -13,13 +15,83 @@ def home_view(request):
     videos = VideoEmbed.objects.filter(is_active=True).order_by('-id')[:6]
     settings = SocialAndAppSettings.objects.first()
     
+    # Latest active offer fetch karne ke liye (Button ke liye check karne ke liye)
+    active_offer = SpecialOffer.objects.filter(is_active=True).order_by('-created_at').first()
+    if active_offer and active_offer.is_expired():
+        active_offer = None
+
     context = {
         'banners': banners,
         'services': services,
         'videos': videos,
         'settings': settings,
+        'active_offer': active_offer,
     }
     return render(request, 'index.html', context)
+
+
+def offers_page_view(request):
+    """Dedicated Offers Page showing both Deal of the Day and Weekly Offer with WhatsApp Booking Modal"""
+    settings = SocialAndAppSettings.objects.first()
+    
+    # Active Daily Deal & Weekly Offer fetch karo
+    deal_of_the_day = SpecialOffer.objects.filter(is_active=True, offer_type='daily').order_by('-created_at').first()
+    if deal_of_the_day and deal_of_the_day.is_expired():
+        deal_of_the_day = None
+
+    weekly_offer = SpecialOffer.objects.filter(is_active=True, offer_type='weekly').order_by('-created_at').first()
+    if weekly_offer and weekly_offer.is_expired():
+        weekly_offer = None
+
+    # Handle WhatsApp Booking submission from modal form
+    if request.method == 'POST':
+        offer_id = request.POST.get('offer_id')
+        offer = get_object_or_404(SpecialOffer, id=offer_id)
+        
+        name = request.POST.get('name')
+        address = request.POST.get('address')
+        phone = request.POST.get('phone')
+        
+        # Manager WhatsApp number from admin settings (Fallback default)
+        wa_number = settings.phone_number if settings and settings.phone_number else "919876543210"
+        
+        # Custom Template from admin settings (Fallback text if not provided)
+        template = getattr(settings, 'manager_wa_template', None)
+        if not template:
+            template = (
+                "🎉 *NL MAKEOVER - SPECIAL OFFER BOOKING* 🎉\n\n"
+                "Hi Manager, maine yeh offer claim kiya hai:\n"
+                "✨ *Offer:* {offer_title}\n"
+                "🏷️ *Discount:* {discount_tag}\n"
+                "----------------------------------\n"
+                "👤 *Customer Name:* {name}\n"
+                "📍 *Address:* {address}\n"
+                "📞 *Mobile:* {phone}\n"
+                "----------------------------------\n"
+                "Kripya meri booking confirm karein!"
+            )
+        
+        # Formatting placeholders with dynamic user and offer details
+        formatted_message = template.format(
+            name=name,
+            address=address,
+            phone=phone,
+            offer_title=offer.title,
+            discount_tag=offer.discount_tag
+        )
+        
+        # URL encoding for safe WhatsApp query transmission
+        encoded_message = urllib.parse.quote(formatted_message)
+        whatsapp_url = f"https://wa.me/{wa_number}?text={encoded_message}"
+        
+        return redirect(whatsapp_url)
+
+    context = {
+        'deal_of_the_day': deal_of_the_day,
+        'weekly_offer': weekly_offer,
+        'settings': settings,
+    }
+    return render(request, 'salon/offer_booking.html', context)
 
 
 def services_list_view(request):
@@ -32,6 +104,7 @@ def services_list_view(request):
     }
     return render(request, 'services_list.html', context)
 
+
 def service_detail_view(request, pk):
     """Individual service detail page to resolve Googlebot crawling errors for /service/<pk>/"""
     service = get_object_or_404(Service, pk=pk)
@@ -42,16 +115,12 @@ def service_detail_view(request, pk):
     }
     return render(request, 'salon/service_detail.html', context)
 
+
 def videos_list_view(request):
     """Saari videos/reels ka dedicated page."""
     videos = VideoEmbed.objects.filter(
         is_active=True
     ).order_by('-id')
-
-    for video in videos:
-        print("PLATFORM:", video.platform)
-        print("ORIGINAL URL:", video.url)
-        print("EMBED URL:", video.get_embed_url)
 
     settings = SocialAndAppSettings.objects.first()
 
@@ -102,6 +171,7 @@ def legal_page_view(request, slug):
         }
 
     return render(request, 'legal_page.html', {'page': page, 'slug': slug})
+
 
 def certificates_view(request):
     certificates = Certificate.objects.filter(
@@ -156,6 +226,8 @@ def academic_certificate_view(request):
         "certificates": certificates,
         "settings": settings,
     })
+
+
 def sitemap_view(request):
     services = Service.objects.all()
     videos = VideoEmbed.objects.filter(is_active=True).order_by('-id')

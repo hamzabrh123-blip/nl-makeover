@@ -3,24 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ service.name }} | NL Makeover</title>
+    
+    <title>{{ service.title }} | NL Makeover Bahraich</title>
+    <meta name="description" content="Explore {{ service.title }} and professional beauty treatments at NL Makeover, Bahraich.">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
 </head>
-<body class="bg-stone-950 text-stone-100 font-sans">
+
+<body class="bg-stone-950 text-stone-100 font-sans" oncontextmenu="return false;">
+
     {% include 'salon/header.html' %}
+
     <main class="min-h-screen px-4 py-14">
-        <div class="max-w-4xl mx-auto bg-stone-900 border border-stone-800 rounded-2xl p-8">
-            <h1 class="text-3xl font-bold text-amber-300 mb-4">{{ service.name }}</h1>
-            <p class="text-stone-300 leading-7 mb-6">{{ service.description|safe }}</p>
-            {% if service.price %}
-            <p class="text-amber-400 font-semibold mb-6">Price: ₹{{ service.price }}</p>
-            {% endif %}
-            <a href="/services/" class="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300">
-                <i class="fa-solid fa-arrow-left"></i> Back to Services
-            </a>
+        <div class="max-w-4xl mx-auto">
+
+            <!-- Service Detail Box -->
+            <div class="bg-stone-900 border border-stone-800 rounded-2xl p-6 md:p-10 shadow-xl">
+                
+                <!-- Service Image -->
+                {% if service.image %}
+                <div class="mb-8 overflow-hidden rounded-xl aspect-[16/9] bg-stone-950 border border-stone-800">
+                    <img src="{{ service.image.url }}" alt="{{ service.title }}" class="w-full h-full object-cover">
+                </div>
+                {% endif %}
+
+                <span class="text-xs uppercase tracking-wider text-amber-400 font-semibold bg-amber-950/30 px-3 py-1 rounded-md border border-amber-900/30">
+                    {{ service.category }}
+                </span>
+
+                <h1 class="text-3xl md:text-4xl font-bold font-serif text-amber-300 mt-4 mb-4">
+                    {{ service.title }}
+                </h1>
+
+                {% if service.price %}
+                <div class="inline-block bg-amber-500/10 border border-amber-500/30 text-amber-400 font-semibold px-4 py-2 rounded-lg mb-6">
+                    Price: ₹{{ service.price }}
+                </div>
+                {% endif %}
+
+                <!-- Description rendered safely with |safe -->
+                {% if service.description %}
+                <div class="text-stone-300 leading-7 text-base mb-8 space-y-4">
+                    {{ service.description|safe }}
+                </div>
+                {% endif %}
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap gap-4 pt-4 border-t border-stone-800">
+                    <a href="/services/" class="inline-flex items-center gap-2 border border-stone-700 hover:border-amber-400 text-stone-200 hover:text-amber-400 px-6 py-3 rounded-xl transition">
+                        <i class="fa-solid fa-arrow-left"></i> All Services
+                    </a>
+                    {% if settings.phone_number %}
+                    <a href="https://wa.me/91{{ settings.phone_number }}?text=Hi,%20I%20am%20interested%20in%20{{ service.title }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold px-6 py-3 rounded-xl transition">
+                        <i class="fa-brands fa-whatsapp"></i> Book via WhatsApp
+                    </a>
+                    {% endif %}
+                </div>
+
+            </div>
+
         </div>
     </main>
+
     {% include 'salon/footer.html' %}
+
+    <!-- Security Script -->
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('copy', event => event.preventDefault());
+    </script>
 </body>
 </html>

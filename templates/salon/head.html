@@ -1,0 +1,92 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="zDQvh5QxjLRGGZkgvNN6Gf7wW-o7dEwXhPQhSjXOJUw" />
+
+<!-- Tab Icon / Favicon -->
+{% if settings.logo %}
+<link rel="icon" type="image/x-icon" href="{{ settings.logo.url }}">
+<link rel="shortcut icon" href="{{ settings.logo.url }}">
+{% endif %}
+
+<!-- Pinterest Verification -->
+<meta name="p:domain_verify" content="0c18efd1ad55611d286fbd71d462ec46"/>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EPK9WNHM73"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-EPK9WNHM73');
+</script>
+
+<!-- Open Graph / Facebook / WhatsApp Meta Tags -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}/">
+<meta property="og:title" content="{{ settings.site_name|default:'NL Makeover' }} | Best Bridal Studio & Beauty Parlour in Court Road, Bahraich">
+<meta property="og:description" content="NL Makeover at Court Road, Bahraich is your ultimate luxury beauty parlour & bridal studio offering professional bridal makeup, hair styling, and advanced skin treatments.">
+<meta property="og:image" content="https://res.cloudinary.com/dvoqsrkkq/image/upload/v1792176767/banners/Gemini_Generated_Image_r6l4jdr6l4jdr6l4_result_e4zb8h.webp">
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="{{ request.scheme }}://{{ request.get_host }}/">
+<meta name="twitter:title" content="{{ settings.site_name|default:'NL Makeover' }} | Best Bridal Studio & Beauty Parlour in Court Road, Bahraich">
+<meta name="twitter:description" content="NL Makeover at Court Road, Bahraich is your ultimate luxury beauty parlour & bridal studio offering professional bridal makeup, hair styling, and advanced skin treatments.">
+<meta name="twitter:image" content="https://res.cloudinary.com/dvoqsrkkq/image/upload/v1792176767/banners/Gemini_Generated_Image_r6l4jdr6l4jdr6l4_result_e4zb8h.webp">
+
+<!-- Tailwind CSS CDN & FontAwesome -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Flowbite Carousel CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+
+<!-- Anti-Copy CSS Protection -->
+<style>
+    body, html {
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    img {
+        -webkit-user-drag: none;
+        user-drag: none;
+        pointer-events: none;
+    }
+</style>
+
+<!-- Google Structured Data (JSON-LD Schema) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BeautySalon",
+  "name": "NL Makeover",
+  "image": "{{ request.scheme }}://{{ request.get_host }}/static/images/logo.png",
+  "@id": "{{ request.scheme }}://{{ request.get_host }}/#salon",
+  "url": "{{ request.scheme }}://{{ request.get_host }}/",
+  "telephone": "+91-9876543210",
+  "priceRange": "₹₹",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Main Road",
+    "addressLocality": "Bahraich",
+    "addressRegion": "UP",
+    "postalCode": "271801",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 27.575,
+    "longitude": 81.595
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "opens": "09:00",
+    "closes": "20:00"
+  },
+  "sameAs": [
+    "https://www.instagram.com/",
+    "https://www.facebook.com/"
+  ]
+}
+</script>

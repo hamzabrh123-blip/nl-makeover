@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <title>NL Makeover | Special Offers & Deals</title>
+    <meta name="description" content="Check out the latest exclusive daily deals and weekly special offers at NL Makeover, Bahraich. Book now via WhatsApp!">
+    
+    <!-- Common Head Include -->
+    {% include 'salon/head.html' %}
+</head>
+<body class="bg-stone-950 text-stone-100 font-sans min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-stone-950" oncontextmenu="return false;">
+
+    <!-- Header Include -->
+    {% include 'salon/header.html' %}
+
+    <div class="max-w-5xl mx-auto px-4 py-12 flex-grow">
+        <!-- Page Header -->
+        <div class="text-center mb-12">
+            <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-widest">
+                ✨ Exclusive Salon Packages
+            </span>
+            <h1 class="text-3xl sm:text-5xl font-serif font-bold text-amber-300 mt-4">NL Makeover Special Offers</h1>
+            <p class="text-stone-400 text-sm mt-2">Claim your deal today and connect directly with our manager via WhatsApp!</p>
+        </div>
+
+        <!-- Offers Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            
+            <!-- 1. DEAL OF THE DAY -->
+            {% if deal_of_the_day %}
+            <div class="relative bg-gradient-to-br from-amber-950/80 via-stone-900 to-stone-950 border-2 border-amber-500/60 rounded-3xl p-6 sm:p-8 shadow-[0_0_40px_rgba(245,158,11,0.25)] flex flex-col justify-between overflow-hidden group">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-amber-500 text-stone-950 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider animate-pulse shadow-md">
+                            🔥 Deal of the Day
+                        </span>
+                        <span class="text-amber-400/90 text-xs font-mono uppercase tracking-widest bg-stone-950/80 px-3 py-1 rounded-md border border-amber-900/40">
+                            {{ deal_of_the_day.discount_tag }}
+                        </span>
+                    </div>
+
+                    {% if deal_of_the_day.image %}
+                    <div class="mb-5 overflow-hidden rounded-2xl aspect-[16/9] bg-stone-950 border border-stone-800">
+                        <img src="{{ deal_of_the_day.image.url }}" alt="{{ deal_of_the_day.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    {% endif %}
+
+                    <h2 class="text-2xl font-serif font-bold text-amber-200 mb-2">{{ deal_of_the_day.title }}</h2>
+                    <div class="text-stone-300 text-sm leading-relaxed mb-6">{{ deal_of_the_day.description|safe }}</div>
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between text-xs text-amber-400 font-mono mb-6 bg-stone-950/80 py-2.5 px-4 rounded-xl border border-amber-900/40">
+                        <span>⏳ Ends in:</span>
+                        <span id="dotd-timer" data-endtime="{{ deal_of_the_day.end_time|date:'c' }}" class="font-bold">Loading...</span>
+                    </div>
+
+                    <button onclick="openBookingModal('{{ deal_of_the_day.id }}', '{{ deal_of_the_day.title|escapejs }}', '{{ deal_of_the_day.discount_tag|escapejs }}')" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-stone-950 font-extrabold py-3.5 rounded-xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bolt"></i> Claim Deal of the Day
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- 2. WEEKLY OFFER -->
+            {% if weekly_offer %}
+            <div class="relative bg-gradient-to-br from-stone-900 via-stone-900 to-amber-950/40 border border-stone-800 hover:border-amber-500/40 rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between overflow-hidden group transition duration-300">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="bg-stone-800 text-amber-400 border border-amber-500/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                            ⭐ Weekly Special
+                        </span>
+                        <span class="text-stone-400 text-xs font-mono uppercase tracking-widest bg-stone-950/80 px-3 py-1 rounded-md border border-stone-800">
+                            {{ weekly_offer.discount_tag }}
+                        </span>
+                    </div>
+
+                    {% if weekly_offer.image %}
+                    <div class="mb-5 overflow-hidden rounded-2xl aspect-[16/9] bg-stone-950 border border-stone-800">
+                        <img src="{{ weekly_offer.image.url }}" alt="{{ weekly_offer.title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    {% endif %}
+
+                    <h2 class="text-2xl font-serif font-bold text-stone-100 group-hover:text-amber-300 transition mb-2">{{ weekly_offer.title }}</h2>
+                    <div class="text-stone-400 text-sm leading-relaxed mb-6">{{ weekly_offer.description|safe }}</div>
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between text-xs text-stone-400 font-mono mb-6 bg-stone-950/80 py-2.5 px-4 rounded-xl border border-stone-800">
+                        <span>⏳ Valid till:</span>
+                        <span id="weekly-timer" data-endtime="{{ weekly_offer.end_time|date:'c' }}" class="font-bold text-amber-400">Loading...</span>
+                    </div>
+
+                    <button onclick="openBookingModal('{{ weekly_offer.id }}', '{{ weekly_offer.title|escapejs }}', '{{ weekly_offer.discount_tag|escapejs }}')" class="w-full bg-stone-800 hover:bg-stone-700 text-amber-400 border border-amber-500/30 font-extrabold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-gift"></i> Claim Weekly Offer
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+
+        <div class="text-center">
+            <a href="/" class="text-stone-400 hover:text-amber-400 text-xs inline-flex items-center gap-2 font-semibold">
+                <i class="fa-solid fa-arrow-left"></i> Back to Homepage
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer Include -->
+    {% include 'salon/footer.html' %}
+
+    <!-- Booking Modal Form -->
+    <div id="bookingModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="max-w-md w-full bg-stone-900 border border-amber-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-100 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <span id="modalDiscountTag" class="text-amber-400 text-xs font-bold uppercase tracking-widest bg-amber-950/50 px-3 py-1 rounded-md border border-amber-900/30">
+                    LIMITED OFFER
+                </span>
+                <h3 id="modalOfferTitle" class="text-xl font-serif font-bold text-amber-300 mt-3">Offer Title</h3>
+            </div>
+
+            <form method="POST" class="space-y-4">
+                {% csrf_token %}
+                <input type="hidden" name="offer_id" id="modalOfferId">
+                <div>
+                    <label class="block text-xs font-semibold text-stone-300 mb-1">Full Name</label>
+                    <input type="text" name="name" required placeholder="Enter your name" class="w-full bg-stone-950 border border-stone-800 rounded-xl px-4 py-3 text-stone-100 text-sm focus:border-amber-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-stone-300 mb-1">Address / Location</label>
+                    <input type="text" name="address" required placeholder="Enter address (e.g., Court Road, Bahraich)" class="w-full bg-stone-950 border border-stone-800 rounded-xl px-4 py-3 text-stone-100 text-sm focus:border-amber-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-stone-300 mb-1">WhatsApp Mobile Number</label>
+                    <input type="tel" name="phone" required placeholder="Enter 10-digit phone number" class="w-full bg-stone-950 border border-stone-800 rounded-xl px-4 py-3 text-stone-100 text-sm focus:border-amber-500 focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-stone-950 font-extrabold py-3.5 rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Send Booking to WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Scripting for Timers & Modals -->
+    <script>
+        function openBookingModal(id, title, tag) {
+            document.getElementById('modalOfferId').value = id;
+            document.getElementById('modalOfferTitle').innerText = title;
+            document.getElementById('modalDiscountTag').innerText = tag;
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function setupTimer(elementId, endtimeAttr) {
+            const el = document.getElementById(elementId);
+            if(!el) return;
+            const endTime = new Date(el.getAttribute(endtimeAttr)).getTime();
+            
+            setInterval(() => {
+                const now = new Date().getTime();
+                const distance = endTime - now;
+                if (distance < 0) {
+                    el.innerHTML = "EXPIRED";
+                } else {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    if (days > 0) {
+                        el.innerHTML = `${days}d ${hours}h ${minutes}m left`;
+                    } else {
+                        el.innerHTML = `${hours}h ${minutes}m ${seconds}s left`;
+                    }
+                }
+            }, 1000);
+        }
+        
+        setupTimer('dotd-timer', 'data-endtime');
+        setupTimer('weekly-timer', 'data-endtime');
+    </script>
+</body>
+</html>
