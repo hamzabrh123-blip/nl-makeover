@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Service, VideoEmbed, SocialAndAppSettings, SliderBanner, LegalPage, Certificate
+from .models import Service, VideoEmbed, SocialAndAppSettings, SliderBanner, LegalPage, Certificate, VisitorLog
 from .offer_models import SpecialOffer
 
 @admin.register(SpecialOffer)
@@ -56,3 +56,17 @@ class CertificateAdmin(admin.ModelAdmin):
     search_fields = ('title', 'certificate_number', 'issuing_authority')
     ordering = ('display_order', '-created_at')
     readonly_fields = ('created_at',)
+
+@admin.register(VisitorLog)
+class VisitorLogAdmin(admin.ModelAdmin):
+    list_display = ('city', 'platform', 'page', 'ip_address', 'visited_at')
+    list_filter = ('city', 'platform', 'page', 'visited_at')
+    search_fields = ('city', 'ip_address')
+    readonly_fields = ('city', 'platform', 'page', 'ip_address', 'visited_at')
+    
+    # Client isme se logs delete ya edit na kare, sirf dekhe aur filter kare
+    def has_add_permission(self, request):
+        return False
+        
+    def has_change_permission(self, request, obj=None):
+        return False

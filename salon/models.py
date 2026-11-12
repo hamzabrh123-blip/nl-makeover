@@ -262,3 +262,35 @@ class LegalPage(models.Model):
     class Meta:
         verbose_name = "Legal & Compliance Page"
         verbose_name_plural = "Legal & Compliance Pages"
+
+
+class VisitorLog(models.Model):
+    PLATFORM_CHOICES = [
+        ('Google Search', 'Google Search'),
+        ('Instagram', 'Instagram'),
+        ('WhatsApp', 'WhatsApp'),
+        ('Pinterest', 'Pinterest'),
+        ('Facebook', 'Facebook'),
+        ('Direct Visit', 'Direct Visit'),
+    ]
+
+    PAGE_CHOICES = [
+        ('Home', 'Home Page'),
+        ('Academic Hub', 'Academic Hub'),
+        ('Offers', 'Offers'),
+        ('Services', 'Services'),
+    ]
+
+    city = models.CharField(max_length=100, verbose_name="Location / City")
+    platform = models.CharField(max_length=50, choices=PLATFORM_CHOICES, default='Direct Visit', verbose_name="Platform / Source")
+    page = models.CharField(max_length=50, choices=PAGE_CHOICES, verbose_name="Page Visited")
+    ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name="IP Address")
+    visited_at = models.DateTimeField(auto_now_add=True, verbose_name="Date & Time")
+
+    class Meta:
+        verbose_name = "Visitor Log"
+        verbose_name_plural = "GPS & Visitor Hub"
+        ordering = ['-visited_at']
+
+    def __str__(self):
+        return f"{self.city} | {self.platform} -> {self.page}"
