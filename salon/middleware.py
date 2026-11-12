@@ -2,7 +2,21 @@ import urllib.request
 import json
 from math import radians, sin, cos, sqrt, atan2
 from django.utils.deprecation import MiddlewareMixin
+from django.http import HttpResponsePermanentRedirect
 from .models import VisitorLog
+
+class HttpToHttpsMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if not request.is_secure():
+            host = request.get_host()
+            url = f"https://{host}{request.get_path()}"
+            return HttpResponsePermanentRedirect(url)
+        
+        return self.get_response(request)
+
 
 class VisitorTrackingMiddleware(MiddlewareMixin):
     def process_request(self, request):
@@ -63,7 +77,7 @@ class VisitorTrackingMiddleware(MiddlewareMixin):
         else:
             ip = request.META.get('REMOTE_ADDR', '')
 
-        # 4. Fetch City & Coordinates via Free Geolocation API with 5km Bahraich Rule
+        # 4. Fetch City & Coordinates via Free Geolocation API with robust Bahraich spelling & 5km check
         city_label = 'Bahraich (City)'
         try:
             if ip and ip != '127.0.0.1' and ip != 'localhost':
@@ -76,16 +90,19 @@ class VisitorTrackingMiddleware(MiddlewareMixin):
                     lon = data.get('longitude')
 
                     if api_city:
-                        if api_city.lower() == 'bahraich':
-                            # Shop main coordinates (Brahmnipura, Bahraich)
+                        # Handle spelling variants like 'bahraich' or 'bahraigh'
+                        if 'bahraich' in api_city.lower() or 'bahraigh' in api_city.lower():
                             shop_lat, shop_lon = 27.5758, 81.5956
                             
                             if lat and lon:
-                                distance = self._calculate_distance(shop_lat, shop_lon, float(lat), float(lon))
-                                if distance <= 5.0:
+                                try:
+                                    distance = self._calculate_distance(shop_lat, shop_lon, float(lat), float(lon))
+                                    if distance <= 5.0:
+                                        city_label = 'Bahraich (City)'
+                                    else:
+                                        city_label = 'Bahraich (Gaon)'
+                                except Exception:
                                     city_label = 'Bahraich (City)'
-                                else:
-                                    city_label = 'Bahraich (Gaon)'
                             else:
                                 city_label = 'Bahraich (City)'
                         else:
