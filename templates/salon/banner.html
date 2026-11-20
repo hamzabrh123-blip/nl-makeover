@@ -6,12 +6,14 @@
             <div class="relative h-56 sm:h-80 md:h-96 lg:h-[450px] overflow-hidden rounded-2xl">
                 {% for banner in banners %}
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="{{ banner.image.url }}" class="absolute block w-full h-full object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" alt="{{ banner.title|default:'NL Makeover Banner' }}">
-                    {% if banner.title %}
-                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent p-6 text-center sm:text-left">
-                        <h3 class="text-xl sm:text-3xl font-serif font-bold text-amber-300">{{ banner.title }}</h3>
-                    </div>
-                    {% endif %}
+                    <a href="{{ banner.get_target_url }}" class="block w-full h-full cursor-pointer">
+                        <img src="{{ banner.image.url }}" class="absolute block w-full h-full object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" alt="{{ banner.alt_text|default:'NL Makeover Beauty Parlour in Bahraich' }}">
+                        {% if banner.title %}
+                        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent p-6 text-center sm:text-left">
+                            <h3 class="text-xl sm:text-3xl font-serif font-bold text-amber-300">{{ banner.title }}</h3>
+                        </div>
+                        {% endif %}
+                    </a>
                 </div>
                 {% endfor %}
             </div>

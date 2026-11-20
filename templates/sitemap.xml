@@ -21,6 +21,38 @@
         </video:video>
         {% endfor %}
     </url>
+
+    <!-- Core Pages -->
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/services/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/offers/</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/certificates/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/certificates/iso/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/certificates/msme/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>{{ request.scheme }}://{{ request.get_host }}/certificates/academic/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
     
     <!-- Legal & Compliance Pages -->
     <url>
@@ -49,10 +81,10 @@
         <priority>0.3</priority>
     </url>
 
-    <!-- Dynamic Service Pages -->
+    <!-- Dynamic Service Pages (SEO Slug URLs) -->
     {% for service in services %}
     <url>
-        <loc>{{ request.scheme }}://{{ request.get_host }}/service/{{ service.id }}/</loc>
+        <loc>{{ request.scheme }}://{{ request.get_host }}{% if service.slug %}/service/{{ service.slug }}/{% else %}/service/{{ service.id }}/{% endif %}</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>

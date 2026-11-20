@@ -8,16 +8,16 @@
         </span>
         {% endif %}
 
-        {% if settings.hero_title %}
-        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold tracking-tight mb-6 text-stone-100">
+       {% if settings.hero_title %}
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold tracking-tight mb-6 bg-gradient-to-r from-orange-400 via-stone-50 to-green-400 bg-clip-text text-transparent pb-2 drop-shadow-[0_2px_10px_rgba(255,255,255,0.08)]">
             {{ settings.hero_title }}
         </h1>
         {% endif %}
 
         {% if settings.hero_description %}
-        <p class="max-w-2xl mx-auto text-stone-400 text-base sm:text-lg mb-8">
-            {{ settings.hero_description }}
-        </p>
+        <div class="max-w-2xl mx-auto text-stone-400 text-base sm:text-lg mb-8 space-y-2">
+            {{ settings.hero_description|safe }}
+        </div>
         {% endif %}
 
         <div class="flex flex-wrap justify-center gap-4">

@@ -1,14 +1,14 @@
-{% extends 'index.html' %} <!-- ya jo bhi aapka base layout file ka naam ho -->
+{% extends 'index.html' %}
 
 {% block content %}
 <div class="bg-stone-950 min-h-screen py-16 px-4 sm:px-6 lg:px-8">
     <!-- Header Section -->
     <div class="max-w-7xl mx-auto text-center mb-16 space-y-4">
         <h1 class="text-3xl md:text-5xl font-serif font-bold bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-600 bg-clip-text text-transparent">
-            Our Professional Services
+            Our Professional Services in Bahraich
         </h1>
         <p class="text-stone-400 max-w-2xl mx-auto text-sm md:text-base">
-            Explore our comprehensive range of luxury beauty treatments, advanced skin care, and professional bridal makeover services tailored just for you.
+            Explore our comprehensive range of luxury beauty treatments, advanced skin care, and professional bridal makeover services at Court Road, Bahraich.
         </p>
     </div>
 
@@ -19,37 +19,45 @@
             
             <!-- Service Image -->
             {% if service.image %}
-            <div class="h-56 w-full overflow-hidden bg-stone-950 relative">
-                <img src="{{ service.image.url }}" alt="{{ service.title }}" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+            <a href="{% if service.slug %}{% url 'service_detail_slug' service.slug %}{% else %}{% url 'service_detail' service.id %}{% endif %}" class="block h-56 w-full overflow-hidden bg-stone-950 relative">
+                <img src="{{ service.image.url }}" alt="{{ service.image_alt|default:service.title }}" class="w-full h-full object-cover hover:scale-105 transition duration-500">
                 <span class="absolute top-4 right-4 bg-stone-950/80 backdrop-blur-md text-amber-400 text-xs font-semibold px-3 py-1 rounded-full border border-stone-800">
                     {{ service.category }}
                 </span>
-            </div>
+            </a>
             {% endif %}
 
             <!-- Service Content -->
             <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
                 <div class="space-y-2">
-                    <h3 class="text-xl font-serif font-bold text-stone-100">{{ service.title }}</h3>
-                    <p class="text-amber-400 font-semibold text-sm">Starts from: {{ service.price }}</p>
+                    <h2 class="text-xl font-serif font-bold text-stone-100">
+                        <a href="{% if service.slug %}{% url 'service_detail_slug' service.slug %}{% else %}{% url 'service_detail' service.id %}{% endif %}" class="hover:text-amber-400 transition">
+                            {{ service.title }}
+                        </a>
+                    </h2>
+                    {% if service.price %}
+                    <p class="text-amber-400 font-semibold text-sm">Starts from: ₹{{ service.price }}</p>
+                    {% endif %}
                     
-                    <!-- Poora description bina truncation ke -->
                     <div class="text-stone-400 text-sm leading-relaxed prose prose-invert pt-2">
                         {{ service.description|safe }}
                     </div>
                 </div>
 
-                <!-- Action / Enquiry Button -->
-                <div class="pt-4 border-t border-stone-800">
-                    <a href="https://wa.me/91{{ settings.phone_number|default:'9170112725' }}?text=Hi,%20I%20want%20to%20know%20more%20about%20your%20service:%20{{ service.title }}" target="_blank" class="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-stone-950 font-semibold py-2.5 px-4 rounded-xl text-sm transition shadow-lg shadow-amber-500/10">
-                        <i class="fa-brands fa-whatsapp text-base"></i> Enquire / Book Now
+                <!-- Action Buttons -->
+                <div class="pt-4 border-t border-stone-800 flex flex-col sm:flex-row gap-2">
+                    <a href="{% if service.slug %}{% url 'service_detail_slug' service.slug %}{% else %}{% url 'service_detail' service.id %}{% endif %}" class="flex-1 flex items-center justify-center gap-2 bg-stone-800 hover:bg-stone-700 text-stone-200 font-semibold py-2.5 px-4 rounded-xl text-sm transition">
+                        <i class="fa-solid fa-eye text-xs text-amber-400"></i> View Page
+                    </a>
+                    <a href="https://wa.me/91{{ settings.phone_number|default:'9170112725' }}?text=Hi%20NL%20Makeover,%20I%20want%20to%20know%20more%20about%20{{ service.title|urlencode }}%20in%20Bahraich." target="_blank" rel="noopener noreferrer" class="flex-1 flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-stone-950 font-semibold py-2.5 px-4 rounded-xl text-sm transition shadow-lg shadow-amber-500/10">
+                        <i class="fa-brands fa-whatsapp text-base"></i> Book Now
                     </a>
                 </div>
             </div>
         </div>
         {% empty %}
         <div class="col-span-full text-center py-12 text-stone-500">
-            <p>No services added yet. Please check back soon!</p>
+            <p>No active services added yet. Please add services from the Django Admin panel.</p>
         </div>
         {% endfor %}
     </div>

@@ -5,16 +5,16 @@ from salon.views import (
     iso_certificate_view,
     msme_certificate_view,
     academic_certificate_view,
-    home_view, 
-    sitemap_view, 
+    home_view,
+    sitemap_view,
     robots_txt_view,
     legal_page_view,
     services_list_view,
     service_detail_view,
+    service_detail_slug_view,
     videos_list_view,
-    offers_page_view  # <-- Updated to handle both offers listing & modal booking
+    offers_page_view
 )
-    
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -22,27 +22,28 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name='home'),
 
-    # Special Offers Page Route (Linked with "NL Makeover Offers" button)
+    # Special Offers Page Route
     path('offers/', offers_page_view, name='offers_page'),
 
-     # Certificates & Registrations
+    # Certificates & Registrations
     path('certificates/', certificates_view, name='certificates'),
     path('certificates/iso/', iso_certificate_view, name='iso_certificate'),
     path('certificates/msme/', msme_certificate_view, name='msme_certificate'),
     path('certificates/academic/', academic_certificate_view, name='academic_certificate'),
 
-    # Dedicated Service Pages & Video Gallery
+    # Dedicated Service Pages (Old PK URL untouched + New Slug URL added)
     path('services/', services_list_view, name='services_list'),
     path('service/<int:pk>/', service_detail_view, name='service_detail'),
+    path('service/<slug:slug>/', service_detail_slug_view, name='service_detail_slug'),
     path('videos/', videos_list_view, name='videos_list'),
-    
+
     # Legal & Compliance Pages
     path('about/', legal_page_view, {'slug': 'about'}, name='about'),
     path('contact/', legal_page_view, {'slug': 'contact'}, name='contact'),
     path('privacy-policy/', legal_page_view, {'slug': 'privacy-policy'}, name='privacy_policy'),
     path('terms/', legal_page_view, {'slug': 'terms'}, name='terms'),
     path('disclaimer/', legal_page_view, {'slug': 'disclaimer'}, name='disclaimer'),
-    
+
     path('sitemap.xml', sitemap_view, name='sitemap'),
     path('robots.txt', robots_txt_view, name='robots_txt'),
 ]

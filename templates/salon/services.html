@@ -2,29 +2,33 @@
 <section id="services" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16">
         <h2 class="text-3xl sm:text-4xl font-serif font-bold bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-600 bg-clip-text text-transparent">Our Signature Services</h2>
-        <p class="text-stone-400 mt-2">Explore our professional beauty and bridal packages</p>
+        <p class="text-stone-400 mt-2">Explore our professional beauty and bridal packages in Bahraich</p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {% for service in services %}
         <div class="bg-stone-900/40 border border-stone-800/80 rounded-2xl p-6 shadow-xl hover:border-amber-500/50 transition duration-300 flex flex-col justify-between">
             <div>
                 {% if service.image %}
-                <a href="{% url 'service_detail' service.id %}" class="block mb-5 overflow-hidden rounded-xl aspect-[16/10] bg-stone-950">
-                    <img src="{{ service.image.url }}" alt="{{ service.title }}" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                <a href="{% if service.slug %}{% url 'service_detail_slug' service.slug %}{% else %}{% url 'service_detail' service.id %}{% endif %}" class="block mb-5 overflow-hidden rounded-xl aspect-[16/10] bg-stone-950">
+                    <img src="{{ service.image.url }}" alt="{{ service.image_alt|default:service.title }}" class="w-full h-full object-cover hover:scale-105 transition duration-500">
                 </a>
                 {% endif %}
                 <span class="text-xs uppercase tracking-wider text-amber-400 font-semibold bg-amber-950/30 px-3 py-1 rounded-md border border-amber-900/30">{{ service.category }}</span>
                 <h3 class="text-xl font-serif font-semibold mt-3 text-stone-100">
-                    <a href="{% url 'service_detail' service.id %}" class="hover:text-amber-400 transition">{{ service.title }}</a>
+                    <a href="{% if service.slug %}{% url 'service_detail_slug' service.slug %}{% else %}{% url 'service_detail' service.id %}{% endif %}" class="hover:text-amber-400 transition">{{ service.title }}</a>
                 </h3>
                 <p class="text-stone-400 text-sm mt-2 line-clamp-3">{{ service.description|striptags }}</p>
             </div>
             <div class="mt-6 pt-4 border-t border-stone-800 flex items-center justify-between">
+                {% if service.price %}
                 <span class="text-amber-400 font-bold text-lg">₹ {{ service.price }}</span>
+                {% else %}
+                <span class="text-amber-400 font-semibold text-sm">Contact for Price</span>
+                {% endif %}
                 <div class="flex items-center gap-2">
-                    <a href="{% url 'service_detail' service.id %}" class="text-xs font-semibold bg-stone-800 hover:bg-stone-700 text-stone-200 px-3 py-2 rounded-lg transition">Details</a>
+                    <a href="{% if service.slug %}{% url 'service_detail_slug' service.slug %}{% else %}{% url 'service_detail' service.id %}{% endif %}" class="text-xs font-semibold bg-stone-800 hover:bg-stone-700 text-stone-200 px-3 py-2 rounded-lg transition">Details</a>
                     {% if settings.phone_number %}
-                    <a href="https://wa.me/91{{ settings.phone_number }}?text=Hi,%20I%20am%20interested%20in%20{{ service.title }}" target="_blank" class="text-xs font-semibold bg-amber-500 hover:bg-amber-600 text-stone-950 px-4 py-2 rounded-lg transition">Enquire</a>
+                    <a href="https://wa.me/91{{ settings.phone_number }}?text=Hi%20NL%20Makeover,%20I%20am%20interested%20in%20{{ service.title|urlencode }}" target="_blank" class="text-xs font-semibold bg-amber-500 hover:bg-amber-600 text-stone-950 px-4 py-2 rounded-lg transition">Enquire</a>
                     {% endif %}
                 </div>
             </div>
@@ -45,9 +49,7 @@
     <div class="mt-16 text-center">
         {% if active_offer %}
         <a href="{% url 'offers_page' %}" class="group relative inline-flex items-center justify-center gap-3 w-full max-w-2xl bg-gradient-to-r from-amber-600 via-yellow-400 to-amber-500 hover:from-amber-500 hover:to-yellow-300 text-stone-950 font-serif font-extrabold text-lg sm:text-2xl py-5 px-8 rounded-2xl shadow-[0_0_40px_rgba(245,158,11,0.5)] transition-all duration-300 transform hover:scale-[1.02] border-2 border-amber-200/60 overflow-hidden">
-            <!-- Shimmer effect overlay -->
             <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-            
             <i class="fa-solid fa-fire text-stone-950 text-xl sm:text-2xl animate-bounce"></i>
             <span>NL Makeover Offers</span>
             <i class="fa-solid fa-arrow-right text-sm sm:text-lg group-hover:translate-x-1 transition-transform"></i>

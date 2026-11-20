@@ -33,25 +33,130 @@ class Certificate(models.Model):
 
 
 class SliderBanner(models.Model):
-    title = models.CharField(max_length=150, blank=True, null=True)
-    image = models.ImageField(upload_to='banners/')  # Cloudinary par save hoga
-    is_active = models.BooleanField(default=True)
+    title = models.CharField(max_length=150, blank=True, null=True, verbose_name="Banner Title")
+    image = models.ImageField(upload_to='banners/', verbose_name="Banner Image")
+    alt_text = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name="Banner Image Alt Text (SEO)"
+    )
+    service = models.ForeignKey(
+        'Service',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name="Link to Service Page (Dropdown se select karein)"
+    )
+    custom_url = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name="Custom Link (Optional - Agar service select nahi ki toh ye chalega)"
+    )
+    display_order = models.PositiveIntegerField(default=0, verbose_name="Slide Order")
+    is_active = models.BooleanField(default=True, verbose_name="Active")
+
+    class Meta:
+        ordering = ['display_order', '-id']
+
+    @property
+    def get_target_url(self):
+        # 1. Agar service linked hai toh uska clean slug URL do
+        if self.service:
+            if self.service.slug:
+                return f"/service/{self.service.slug}/"
+            return f"/service/{self.service.id}/"
+        # 2. Warna custom URL do
+        if self.custom_url:
+            return self.custom_url
+        # 3. Kuch bhi set nahi hai toh default services page par bhejo
+        return "/services/"
+
+    def save(self, *args, **kwargs):
+        if not self.alt_text:
+            if self.service:
+                self.alt_text = f"{self.service.title} in Bahraich - NL Makeover"
+            elif self.title:
+                self.alt_text = f"{self.title} - NL Makeover Bahraich"
+            else:
+                self.alt_text = "NL Makeover Beauty Parlour in Bahraich"
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.title or "Banner"
+        return self.title or (self.service.title if self.service else "Banner")
 
 
 class Service(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Service Name")
-    category = models.CharField(max_length=100, verbose_name="Category (e.g., Bridal, Hair)")
-    price = models.CharField(max_length=50, verbose_name="Price / Starting From")
-    description = RichTextField(verbose_name="Service Description")  # CKEditor added here
-    image = models.ImageField(upload_to='services/', blank=True, null=True, verbose_name="Service Image") # Cloudinary par save hoga
+    CATEGORY_CHOICES = (
+        ('Makeup & Styling', 'Makeup & Styling'),
+        ('Hair Treatments', 'Hair Treatments'),
+        ('Facial & Skin Care', 'Facial & Skin Care'),
+        ('Grooming', 'Grooming'),
+        ('Other Services', 'Other Services & Academy'),
+    )
+
+    title = models.CharField(max_length=200, verbose_name="Service Name (H1)")
+    slug = models.SlugField(
+        max_length=220,
+        unique=True,
+        blank=True,
+        null=True,
+        verbose_name="SEO URL Slug (e.g., bridal-makeup-artist-in-bahraich)"
+    )
+    category = models.CharField(
+        max_length=100,
+        choices=CATEGORY_CHOICES,
+        default='Makeup & Styling',
+        verbose_name="Service Category"
+    )
+    price = models.CharField(max_length=50, blank=True, verbose_name="Price / Starting From")
+    description = RichTextField(verbose_name="Detailed Service Description")
+    
+    # Image & Required Alt Text
+    image = models.ImageField(upload_to='services/', blank=True, null=True, verbose_name="Original Service Image")
+    image_alt = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name="Image Alt Text (e.g., Bridal Makeup Artist in Bahraich - NL Makeover)"
+    )
+
+    # Dedicated SEO Meta Fields
+    meta_title = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name="SEO Meta Title (Max 60-70 chars)"
+    )
+    meta_description = models.TextField(
+        max_length=320,
+        blank=True,
+        verbose_name="SEO Meta Description (Max 155-160 chars)"
+    )
+
+    is_active = models.BooleanField(default=True, verbose_name="Active / Show on Website")
     is_featured = models.BooleanField(default=False, verbose_name="Show on Home Page")
-    order = models.PositiveIntegerField(default=0, verbose_name="Display Order / Priority (e.g. 1, 2, 3)")
+    order = models.PositiveIntegerField(default=0, verbose_name="Display Order (1, 2, 3)")
+
+    def save(self, *args, **kwargs):
+        # Nayi service ke liye slug automatic banega agar khali chhoda
+        if not self.slug:
+            base_slug = slugify(f"{self.title}-in-bahraich")
+            slug = base_slug
+            counter = 1
+            while Service.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+
+        # Alt text aur Meta Title khali ho toh automatic fill ho jayega
+        if not self.image_alt:
+            self.image_alt = f"{self.title} in Bahraich - NL Makeover"
+        if not self.meta_title:
+            self.meta_title = f"{self.title} in Bahraich | NL Makeover"
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.order}. {self.title}"
+        return f"[{self.category}] {self.title}"
 
     class Meta:
         ordering = ['order', 'id']
@@ -222,13 +327,36 @@ class Offer(models.Model):
 
 class SocialAndAppSettings(models.Model):
     site_name = models.CharField(max_length=100, default="NL Makeover", verbose_name="Salon Name", blank=True, null=True)
-    logo = models.ImageField(upload_to='logo/', blank=True, null=True, verbose_name="Salon Logo") # Cloudinary par save hoga
+    logo = models.ImageField(upload_to='logo/', blank=True, null=True, verbose_name="Salon Logo")
 
-    # Naye dynamic fields hero section ke liye:
+    # Hero section fields
     hero_tagline = models.CharField(max_length=200, default="Luxury Bridal Studio & Beauty Parlour", blank=True, null=True)
-    hero_title = models.CharField(max_length=200, default="Redefining Your Elegance", blank=True, null=True)
-    hero_description = RichTextField(default="Step into a world of glamour. Experience professional bridal makeup, high-end hair styling, and premium skin treatments tailored just for you.", blank=True, null=True) # CKEditor added here
+    hero_title = models.CharField(max_length=200, default="NL Makeover – Beauty Parlour in Bahraich", blank=True, null=True)
+    hero_description = RichTextField(default="Step into a world of glamour. Experience professional bridal makeup, high-end hair styling, and premium skin treatments tailored just for you.", blank=True, null=True)
 
+    # Homepage / Global Default SEO Fields (Admin se control karne ke liye)
+    meta_title = models.CharField(
+        max_length=200,
+        default="NL Makeover – Best Beauty Parlour in Bahraich | Bridal Makeup & Hair Treatments",
+        verbose_name="Website Meta Title (Homepage)",
+        blank=True,
+        null=True
+    )
+    meta_description = models.TextField(
+        max_length=320,
+        default="NL Makeover Bahraich offers bridal makeup, party makeup, hair spa, hair Botox, keratin, Hydra Facial, skin treatments and professional beauty services. Contact us for appointments.",
+        verbose_name="Website Meta Description (Homepage)",
+        blank=True,
+        null=True
+    )
+    meta_keywords = models.TextField(
+        default="Beauty Parlour in Bahraich, Bridal Makeup Artist in Bahraich, Hair Botox in Bahraich, Hair Spa in Bahraich, Keratin Treatment in Bahraich, Hydra Facial in Bahraich, Hair Color in Bahraich, Party Makeup in Bahraich, Beauty Academy in Bahraich, NL Makeover",
+        verbose_name="Website Meta Keywords (Comma separated)",
+        blank=True,
+        null=True
+    )
+
+    # Contact & Social Links
     phone_number = models.CharField(max_length=20, verbose_name="WhatsApp / Contact Number", blank=True, null=True)
     whatsapp_channel_url = models.URLField(verbose_name="WhatsApp Channel Link", blank=True, null=True)
     instagram_url = models.URLField(verbose_name="Instagram Profile Link", blank=True, null=True)
@@ -236,11 +364,10 @@ class SocialAndAppSettings(models.Model):
     facebook_url = models.URLField(verbose_name="Facebook Page Link", blank=True, null=True)
     google_map_url = models.URLField(verbose_name="Google Map Link (NL Makeover)", blank=True, null=True)
     apk_file = models.FileField(upload_to='apk/', blank=True, null=True, verbose_name="Upload Android APK File")
-    address = models.TextField(verbose_name="Salon Address", blank=True, null=True)
+    address = models.TextField(default="Court Road, Bahraich, Uttar Pradesh – 271801", verbose_name="Salon Address", blank=True, null=True)
 
     def __str__(self):
         return f"Site & App Settings ({self.site_name})"
-
 
 class LegalPage(models.Model):
     PAGE_CHOICES = (
