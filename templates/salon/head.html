@@ -1,13 +1,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Tag Manager (Sabse Upar) -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5W5BTV3W');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Google Search Console & Pinterest Verification -->
 <meta name="google-site-verification" content="zDQvh5QxjLRGGZkgvNN6Gf7wW-o7dEwXhPQhSjXOJUw" />
+<meta name="p:domain_verify" content="0c18efd1ad55611d286fbd71d462ec46"/>
 
-<!-- Dynamic Page Title (Service Page overrides with service.meta_title, otherwise uses Admin Settings) -->
-<!-- Dynamic Page Title -->
-<title>{% block meta_title %}{{ settings.meta_title|default:"NL Makeover – Best Beauty Parlour in Bahraich | Bridal Makeup & Hair Treatments" }}{% endblock %}</title>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3171847065256414" crossorigin="anonymous"></script>
+<meta name="google-adsense-account" content="ca-pub-3171847065256414">
 
-<!-- Dynamic Meta Description & Keywords Managed from Admin  Site & App Settings -->
-<meta name="description" content='{% block meta_description %}{{ settings.meta_description|default:"NL Makeover Bahraich offers bridal makeup, party makeup, hair spa, hair Botox, keratin, Hydra Facial, skin treatments and professional beauty services. Contact us for appointments." }}{% endblock %}'>
+<!-- Dynamic Page Title (58 chars default) -->
+<title>{% block meta_title %}{{ settings.meta_title|default:"NL Makeover Bahraich | Beauty Parlour, Bridal Makeup & Hair" }}{% endblock %}</title>
+
+<!-- Dynamic Meta Description & Keywords Managed from Admin Site & App Settings -->
+<meta name="description" content='{% block meta_description %}{{ settings.meta_description|default:"NL Makeover in Bahraich is a trusted beauty parlour & makeover studio for bridal makeup, hair spa, skin treatments, and salon care. Check reviews & book today!" }}{% endblock %}'>
 <meta name="keywords" content='{% block meta_keywords %}{{ settings.meta_keywords|default:"Beauty Parlour in Bahraich, Bridal Makeup Artist in Bahraich, Hair Botox in Bahraich, Hair Spa in Bahraich, Keratin Treatment in Bahraich, Hydra Facial in Bahraich, Hair Color in Bahraich, Party Makeup in Bahraich, Beauty Academy in Bahraich, NL Makeover" }}{% endblock %}'>
 
 <!-- Canonical URL -->
@@ -19,45 +33,18 @@
 <link rel="shortcut icon" href="{{ settings.logo.url }}">
 {% endif %}
 
-<!-- Pinterest Verification -->
-<meta name="p:domain_verify" content="0c18efd1ad55611d286fbd71d462ec46"/>
-
-<!--google adnsense-->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3171847065256414"
-     crossorigin="anonymous"></script>
-<meta name="google-adsense-account" content="ca-pub-3171847065256414">
-
-
-
-<!-- Google Tag Manager (google ads) -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5W5BTV3W');</script>
-<!-- End Google Tag Manager -->
-
-<!-- Google tag (gtag.js ga4) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EPK9WNHM73"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-EPK9WNHM73');
-</script>
-
 <!-- Open Graph / Facebook / WhatsApp Meta Tags -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-<meta property="og:title" content="{% block og_title %}{{ settings.meta_title|default:'NL Makeover – Best Beauty Parlour in Bahraich | Bridal Makeup & Hair Treatments' }}{% endblock %}">
-<meta property="og:description" content="{% block og_description %}{{ settings.meta_description|default:'NL Makeover at Court Road, Bahraich is your ultimate luxury beauty parlour & bridal studio offering professional bridal makeup, hair styling, and advanced skin treatments.' }}{% endblock %}">
+<meta property="og:title" content="{% block og_title %}{{ settings.meta_title|default:'NL Makeover Bahraich | Beauty Parlour, Bridal Makeup & Hair' }}{% endblock %}">
+<meta property="og:description" content="{% block og_description %}{{ settings.meta_description|default:'NL Makeover in Bahraich is a trusted beauty parlour & makeover studio for bridal makeup, hair spa, skin treatments, and salon care. Check reviews & book today!' }}{% endblock %}">
 <meta property="og:image" content="https://res.cloudinary.com/dvoqsrkkq/image/upload/v1792176767/banners/Gemini_Generated_Image_r6l4jdr6l4jdr6l4_result_e4zb8h.webp">
 
 <!-- Twitter Card Meta Tags -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-<meta name="twitter:title" content="{% block twitter_title %}{{ settings.meta_title|default:'NL Makeover – Best Beauty Parlour in Bahraich | Bridal Makeup & Hair Treatments' }}{% endblock %}">
-<meta name="twitter:description" content="{% block twitter_description %}{{ settings.meta_description|default:'NL Makeover at Court Road, Bahraich is your ultimate luxury beauty parlour & bridal studio offering professional bridal makeup, hair styling, and advanced skin treatments.' }}{% endblock %}">
+<meta name="twitter:title" content="{% block twitter_title %}{{ settings.meta_title|default:'NL Makeover Bahraich | Beauty Parlour, Bridal Makeup & Hair' }}{% endblock %}">
+<meta name="twitter:description" content="{% block twitter_description %}{{ settings.meta_description|default:'NL Makeover in Bahraich is a trusted beauty parlour & makeover studio for bridal makeup, hair spa, skin treatments, and salon care. Check reviews & book today!' }}{% endblock %}">
 <meta name="twitter:image" content="https://res.cloudinary.com/dvoqsrkkq/image/upload/v1792176767/banners/Gemini_Generated_Image_r6l4jdr6l4jdr6l4_result_e4zb8h.webp">
 
 <!-- Tailwind CSS CDN & FontAwesome -->

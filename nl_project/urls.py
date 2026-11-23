@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path
+from django.http import HttpResponse
 from salon.views import (
     certificates_view,
     iso_certificate_view,
@@ -17,6 +18,12 @@ from salon.views import (
 )
 from django.conf import settings
 from django.conf.urls.static import static
+
+
+def ads_txt_view(request):
+    content = "google.com, pub-3171847065256414, DIRECT, f08c47fec0942fa0"
+    return HttpResponse(content, content_type="text/plain")
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -44,8 +51,10 @@ urlpatterns = [
     path('terms/', legal_page_view, {'slug': 'terms'}, name='terms'),
     path('disclaimer/', legal_page_view, {'slug': 'disclaimer'}, name='disclaimer'),
 
+    # SEO & AdSense Verification Files
     path('sitemap.xml', sitemap_view, name='sitemap'),
     path('robots.txt', robots_txt_view, name='robots_txt'),
+    path('ads.txt', ads_txt_view, name='ads_txt'),
 ]
 
 if settings.DEBUG:
