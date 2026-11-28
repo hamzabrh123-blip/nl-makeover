@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TRT22F9F');</script>
+    <!-- End Google Tag Manager -->
     
     <title>{{ service.title }} | NL Makeover Bahraich</title>
     <meta name="description" content="Explore {{ service.title }} and professional beauty treatments at NL Makeover, Bahraich.">
 
-
-<!--google adnsense-->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3171847065256414"
-     crossorigin="anonymous"></script>
-<meta name="google-adsense-account" content="ca-pub-3171847065256414">
-
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3171847065256414" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-3171847065256414">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://elfsightcdn.com/platform.js" async></script>
 
     <style>
         body {
@@ -28,12 +34,15 @@
 </head>
 
 <body class="bg-stone-950 text-stone-100 font-sans" oncontextmenu="return false;">
-    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TRT22F9F"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
     {% include 'salon/header.html' %}
 
     <main class="min-h-screen px-4 py-14">
-        <div class="max-w-4xl mx-auto">
+        <div class="max-w-4xl mx-auto space-y-8">
 
             <!-- Service Detail Box -->
             <div class="bg-stone-900 border border-stone-800 rounded-2xl p-6 md:p-10 shadow-xl">
@@ -71,13 +80,27 @@
                     <a href="/services/" class="inline-flex items-center gap-2 border border-stone-700 hover:border-amber-400 text-stone-200 hover:text-amber-400 px-6 py-3 rounded-xl transition">
                         <i class="fa-solid fa-arrow-left"></i> All Services
                     </a>
-                    {% if settings.phone_number %}
-                    <a href="https://wa.me/91{{ settings.phone_number }}?text=Hi,%20I%20am%20interested%20in%20{{ service.title }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold px-6 py-3 rounded-xl transition">
+                    <a href="https://wa.me/91{{ settings.phone_number|default:'9170112725' }}?text=Hi,%20I%20am%20interested%20in%20{{ service.title|urlencode }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold px-6 py-3 rounded-xl transition">
                         <i class="fa-brands fa-whatsapp"></i> Book via WhatsApp
                     </a>
-                    {% endif %}
                 </div>
 
+            </div>
+
+            <!-- Live Google Reviews Widget for {{ service.title }} -->
+            <div class="bg-stone-900 border border-stone-800 rounded-2xl p-6 md:p-8 shadow-xl space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-800 pb-4">
+                    <h2 class="text-xl md:text-2xl font-bold font-serif text-amber-300">
+                        Google Reviews • {{ service.title }}
+                    </h2>
+                    <a href="https://g.page/r/CYYm6ZtsiLFZEBE/review" target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold px-5 py-2.5 rounded-xl text-sm transition shrink-0">
+                        <i class="fa-solid fa-star"></i> Write a Google Review
+                    </a>
+                </div>
+
+                <!-- Elfsight Google Reviews | Untitled Google Reviews -->
+                <div class="elfsight-app-7dd559c1-5c67-4b00-94ad-28da915d903c" data-elfsight-app-lazy></div>
             </div>
 
         </div>

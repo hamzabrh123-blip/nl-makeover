@@ -38,8 +38,6 @@
                     {% if service.price %}
                     <p class="text-amber-400 font-semibold text-sm">Starts from: ₹{{ service.price }}</p>
                     {% endif %}
-                    
-            
                 </div>
 
                 <!-- Action Buttons -->
@@ -58,6 +56,22 @@
             <p>No active services added yet. Please add services from the Django Admin panel.</p>
         </div>
         {% endfor %}
+    </div>
+
+    <!-- Live Google Reviews Section on Services List -->
+    <div class="max-w-7xl mx-auto mt-16 bg-stone-900/70 border border-stone-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-amber-300">
+                Google Customer Reviews
+            </h2>
+            <a href="https://g.page/r/CYYm6ZtsiLFZEBE/review" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold px-6 py-3 rounded-xl text-sm transition shadow-lg shadow-amber-500/20 shrink-0">
+                <i class="fa-solid fa-pen-to-square"></i> Write a Google Review
+            </a>
+        </div>
+
+        <!-- Elfsight Google Reviews | Untitled Google Reviews -->
+        <div class="elfsight-app-7dd559c1-5c67-4b00-94ad-28da915d903c" data-elfsight-app-lazy></div>
     </div>
 
     <!-- Back to Home -->
